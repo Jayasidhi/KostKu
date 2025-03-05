@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/kamar"
+        android:icon="@drawable/round_meeting_room_24"
+        android:title="Kamar" />
+    <item
+        android:id="@+id/beranda"
+        android:icon="@drawable/round_home_24"
+        android:title="Beranda" />
+    <item
+        android:id="@+id/lapor"
+        android:icon="@drawable/round_campaign_24"
+        android:title="Lapor" />
+</menu>

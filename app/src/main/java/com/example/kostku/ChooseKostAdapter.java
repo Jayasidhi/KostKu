@@ -1,5 +1,6 @@
 package com.example.kostku;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,11 @@ import java.util.List;
 public class ChooseKostAdapter extends RecyclerView.Adapter<ChooseKostAdapter.ViewHolder> {
 
     private List <Kost> kostList;
+    private ChooseKostAdapterListener mChooseKostAdapterListener;
 
-    public ChooseKostAdapter(List<Kost> kostList) {
+    public ChooseKostAdapter(List<Kost> kostList, ChooseKostAdapterListener chooseKostAdapterListener) {
         this.kostList = kostList;
+        this.mChooseKostAdapterListener = chooseKostAdapterListener;
     }
 
     @NonNull
@@ -30,7 +33,7 @@ public class ChooseKostAdapter extends RecyclerView.Adapter<ChooseKostAdapter.Vi
         view.setClickable(true);
         view.setFocusableInTouchMode(true);
 
-        return new ViewHolder(view);
+        return new ViewHolder(view, mChooseKostAdapterListener);
     }
 
     @Override
@@ -40,12 +43,12 @@ public class ChooseKostAdapter extends RecyclerView.Adapter<ChooseKostAdapter.Vi
 
         holder.cvKost.setClickable(true);
 
-        holder.cvKost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(), "KONTOL " + kostList.get(position).getName(), Toast.LENGTH_LONG).show();
-            }
-        });
+//        holder.cvKost.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                Toast.makeText(view.getContext(), "KONTOL " + kostList.get(position).getName(), Toast.LENGTH_LONG).show();
+//            }
+//        });
     }
 
     @Override
@@ -53,20 +56,33 @@ public class ChooseKostAdapter extends RecyclerView.Adapter<ChooseKostAdapter.Vi
         return kostList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private final ImageView kostRowImage;
         private final TextView kostRowName, kostRowAddress;
+        private ChooseKostAdapterListener chooseKostAdapterListener;
 
         private final CardView cvKost;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, ChooseKostAdapterListener chooseKostAdapterListener) {
             super(itemView);
 
             kostRowImage = itemView.findViewById(R.id.kostRowImage);
             kostRowName = itemView.findViewById(R.id.kostRowName);
             kostRowAddress = itemView.findViewById(R.id.kostRowAddress);
             cvKost = itemView.findViewById(R.id.cvKost);
+            this.chooseKostAdapterListener = chooseKostAdapterListener;
+
+            cvKost.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            chooseKostAdapterListener.chooseKostAdapterListener(getAdapterPosition());
+        }
+    }
+
+    public interface ChooseKostAdapterListener {
+            void chooseKostAdapterListener(int position);
     }
 }
