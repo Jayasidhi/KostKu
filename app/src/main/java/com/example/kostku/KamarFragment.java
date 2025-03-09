@@ -1,9 +1,14 @@
 package com.example.kostku;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
@@ -67,32 +72,116 @@ public class KamarFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_kamar, container, false);
     }
 
+    private DatePickerDialog datePickerDialog;
+    private Button dateButton;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 //         Initialize DatePicker from layout
-        DatePicker datePicker = getView().findViewById(R.id.datePicker);
+//        DatePicker datePicker = getView().findViewById(R.id.datePicker);
 
 //         Get today's date using Calendar instance
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH, +1);
-        long limit = calendar.getTimeInMillis();
-
-        datePicker.setMinDate(limit);
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.add(Calendar.DAY_OF_MONTH, +1);
+//        long limit = calendar.getTimeInMillis();
+//
+//        datePicker.setMinDate(limit);
 
 //         Initialize DatePicker with the current date
-        datePicker.init(
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH),
-                new DatePicker.OnDateChangedListener() {
-                    @Override
-                    public void onDateChanged(DatePicker view, int year, int month, int day) {
-                        // Display selected date in Toast message
-                        String msg = "You Selected: " + day + "/" + (month + 1) + "/" + year;
-                        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
+//        datePicker.init(
+//                calendar.get(Calendar.YEAR),
+//                calendar.get(Calendar.MONTH),
+//                calendar.get(Calendar.DAY_OF_MONTH),
+//                new DatePicker.OnDateChangedListener() {
+//                    @Override
+//                    public void onDateChanged(DatePicker view, int year, int month, int day) {
+//                        // Display selected date in Toast message
+//                        String msg = "You Selected: " + day + "/" + (month + 1) + "/" + year;
+//                        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//        );
+
+        initDatePicker();
+        dateButton = getView().findViewById(R.id.datePickerButton);
+        dateButton.setText(getTodaysDate());
+        dateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                datePickerDialog.show();
+                datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
+                datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE).setTextColor(Color.GRAY);
+            }
+        });
+
+    }
+
+    private String getTodaysDate() {
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        month = month + 1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        return makeDateString(day, month, year);
+    }
+
+    private void initDatePicker() {
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1;
+                String date = makeDateString(day, month, year);
+                dateButton.setText(date);
+                Toast.makeText(getActivity(), date, Toast.LENGTH_LONG).show();
+
+                // dibawah ini untuk validasi output kamar apa aja yang avail
+
+            }
+        };
+
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        datePickerDialog = new DatePickerDialog(getActivity(), R.style.SpinnerDatePickerDialogTheme, dateSetListener, year, month, day);
+        datePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis());
+        datePickerDialog.setTitle("Day");
+    }
+
+    private String makeDateString(int day, int month, int year) {
+        return day + " " + getMonthFormat(month) + " " + year;
+
+    }
+
+    private String getMonthFormat(int month) {
+        if (month == 1)
+            return "JAN";
+        if (month == 2)
+            return "FEB";
+        if (month == 3)
+            return "MAR";
+        if (month == 4)
+            return "APR";
+        if (month == 5)
+            return "MAY";
+        if (month == 6)
+            return "JUN";
+        if (month == 7)
+            return "JUL";
+        if (month == 8)
+            return "AUG";
+        if (month == 9)
+            return "SEP";
+        if (month == 10)
+            return "OCT";
+        if (month == 11)
+            return "NOV";
+        if (month == 12)
+            return "DEC";
+
+        //default should never happen
+        return "JAN";
     }
 }

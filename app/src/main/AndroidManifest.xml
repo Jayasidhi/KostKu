@@ -12,14 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KostKu"
         tools:targetApi="31" >
-        <activity
-            android:name=".ChooseKostActivity"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".ChooseKostActivity"-->
+<!--            android:exported="false" />-->
+<!--        <activity-->
+<!--            android:name=".HomeActivity"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".HomeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LoginActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

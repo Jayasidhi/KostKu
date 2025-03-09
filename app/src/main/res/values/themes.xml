@@ -6,4 +6,13 @@
     </style>
 
     <style name="Theme.KostKu" parent="Base.Theme.KostKu" />
+
+    <style name="SpinnerDatePickerDialogTheme" parent="Theme.AppCompat.DayNight.Dialog">
+        <!-- android:datePickerStyle was not added until API 21 -->
+        <item name="android:datePickerStyle">@style/DatePickerStyle</item>
+    </style>
+
+    <style name="DatePickerStyle" parent="@android:style/Widget.Material.Light.DatePicker">
+        <item name="android:datePickerMode">spinner</item>
+    </style>
 </resources>
