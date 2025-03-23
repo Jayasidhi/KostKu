@@ -19,6 +19,7 @@
             android:layout_centerHorizontal="true"/>
 
         <RelativeLayout
+            android:id="@+id/dateLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageView">
@@ -27,7 +28,7 @@
                 android:id="@+id/chooseDateTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Choose Date :"
+                android:text="Pilih Tanggal :"
                 android:layout_marginTop="12dp"
                 android:layout_marginLeft="16dp"
                 android:textStyle="bold"
@@ -69,15 +70,92 @@
 <!--            android:layout_centerHorizontal="true"-->
 <!--            android:layout_below="@+id/chooseDateTxt"/>-->
 
-
-        <Button
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/chooseFloorLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pesan"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"/>
+            android:layout_below="@+id/dateLayout"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:id="@+id/chooseFloorText"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Pilih Lantai:"
+                android:textSize="18dp"
+                android:layout_marginLeft="16dp"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"/>
+
+            <Spinner
+                android:id="@+id/spinnerFloor"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="16dp"
+                android:layout_toRightOf="@+id/chooseFloorText"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/chooseRoomLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/chooseFloorLayout">
+
+            <TextView
+                android:id="@+id/chooseRoomText"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="Pilih Kamar:"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"/>
+
+            <Spinner
+                android:id="@+id/spinnerRoom"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_toRightOf="@+id/chooseRoomText"
+                android:layout_marginLeft="16dp"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+        
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/panoramaLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="250dp"-->
+<!--            android:layout_below="@+id/chooseRoomLayout"-->
+<!--            tools:ignore="WebViewLayout">-->
+
+<!--            <FrameLayout-->
+<!--                android:id="@+id/panoramaView"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"/>-->
+
+
+<!--        </RelativeLayout>-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+<!--            android:layout_below="@+id/panoramaLayout">-->
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pesan"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"/>
+
+
+        </RelativeLayout>
+
+
 
 
     </RelativeLayout>

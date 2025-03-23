@@ -2,4 +2,28 @@
     <string name="app_name">KostKu</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="spinnerFloor">
+        <item>Lantai 1</item>
+        <item>Lantai 2</item>
+        <item>Lantai 3</item>
+    </string-array>
+
+    <string-array name="spinnerRoom">
+        <item>A01</item>
+        <item>A02</item>
+        <item>A03</item>
+        <item>A04</item>
+        <item>A05</item>
+        <item>B01</item>
+        <item>B02</item>
+        <item>B03</item>
+        <item>B04</item>
+        <item>B05</item>
+        <item>C01</item>
+        <item>C02</item>
+        <item>C03</item>
+        <item>C04</item>
+        <item>C05</item>
+    </string-array>
 </resources>

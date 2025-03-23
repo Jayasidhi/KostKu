@@ -6,15 +6,24 @@ import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.FrameLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+//import com.panoramagl.PLImage;
+//import com.panoramagl.PLManager;
+//import com.panoramagl.PLSphericalPanorama;
+//import com.panoramagl.utils.PLUtils;
 
 import java.util.Calendar;
 
@@ -74,6 +83,10 @@ public class KamarFragment extends Fragment {
 
     private DatePickerDialog datePickerDialog;
     private Button dateButton;
+
+//    private FrameLayout flview;
+//    private PLManager plManager;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -114,7 +127,51 @@ public class KamarFragment extends Fragment {
             }
         });
 
+        Spinner spinnerLantai = (Spinner) getView().findViewById(R.id.spinnerFloor);
+        ArrayAdapter<CharSequence> adapterLantai = ArrayAdapter.createFromResource(getActivity(), R.array.spinnerFloor, android.R.layout.simple_spinner_dropdown_item);
+        adapterLantai.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerLantai.setAdapter(adapterLantai);
+
+        Spinner spinnerKamar = (Spinner) getView().findViewById(R.id.spinnerRoom);
+        ArrayAdapter<CharSequence> adapterKamar = ArrayAdapter.createFromResource(getActivity(), R.array.spinnerRoom, android.R.layout.simple_spinner_dropdown_item);
+        adapterLantai.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerKamar.setAdapter(adapterKamar);
+
+//        flview = getView().findViewById(R.id.panoramaView);
+//        initialisePlManager();
+//
+//        PLSphericalPanorama panorama = new PLSphericalPanorama();
+//        panorama.getCamera().lookAt(30.0f, 90.0f);
+//        panorama.setImage(new PLImage(PLUtils.getBitmap(getActivity(), R.drawable.image_pano_test)));
+//        plManager.setPanorama(panorama);
+
     }
+
+//    private void initialisePlManager() {
+//        plManager = new PLManager(getActivity());
+//        plManager.setContentView(flview);
+//        plManager.onCreate();
+//        plManager.setScrollingEnabled(true);
+//        plManager.setAccelerometerEnabled(false);
+//        plManager.setZoomEnabled(true);
+//        plManager.setInertiaEnabled(true);
+//        plManager.setAcceleratedTouchScrollingEnabled(false);
+//    }
+//    public boolean onTouchEvent(MotionEvent event) {
+//        return plManager.onTouchEvent(event);
+//    }
+//
+//    public void onResume() {
+//        super.onResume();
+//        if (plManager != null) {
+//            plManager.onResume();
+//        }
+//    }
+//
+//    public void onDestroy() {
+//        super.onDestroy();
+//        plManager.onDestroy();
+//    }
 
     private String getTodaysDate() {
         Calendar cal = Calendar.getInstance();
@@ -147,7 +204,7 @@ public class KamarFragment extends Fragment {
 
         datePickerDialog = new DatePickerDialog(getActivity(), R.style.SpinnerDatePickerDialogTheme, dateSetListener, year, month, day);
         datePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis());
-        datePickerDialog.setTitle("Day");
+        datePickerDialog.setTitle("Tanggal");
     }
 
     private String makeDateString(int day, int month, int year) {
