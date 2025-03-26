@@ -2,11 +2,16 @@ package com.example.kostku;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,5 +65,24 @@ public class LaporFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_lapor, container, false);
+    }
+
+
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        WebView webView = getView().findViewById(R.id.webView);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setAllowFileAccess(true);
+        webSettings.setAllowContentAccess(true);
+        webSettings.setDomStorageEnabled(true);
+
+        webView.setWebViewClient(new WebViewClient());
+
+        // Load local HTML file with Panorama JS
+        webView.loadUrl("File:///android_asset/panorama.html");
+        webView.evaluateJavascript("loadPanorama('file:///android_asset/panorama_image.jpg');", null);
+
     }
 }

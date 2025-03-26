@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!--    <script src="https://photo-sphere-viewer.js.org/dist/photo-sphere-viewer.js"></script>-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4.8.0/dist/photo-sphere-viewer.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4.8.0/dist/photo-sphere-viewer.min.css">
+</head>
+<body>
+<h1>TEST</h1>
+<div id="viewer" style="width: 100%; height: 100vh;"></div>
+<script>
+        function loadPanorama(imagePath) {
+            const viewer = new PhotoSphereViewer.Viewer({
+                container: document.getElementById('viewer'),
+                panorama: 'file:///android_asset/panorama_image.jpg' // Place panorama.jpg in assets folder
+            });
+        }
+</script>
+</body>
+</html>

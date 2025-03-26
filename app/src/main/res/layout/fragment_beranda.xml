@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BerandaFragment"
-    >
+    tools:context=".BerandaFragment">
 
     <!--    <fragment-->
     <!--        android:id="@+id/header_search"-->
@@ -21,6 +20,7 @@
     <!--        android:layout_gravity="center"/>-->
 
     <RelativeLayout
+        android:id="@+id/denahLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -29,18 +29,162 @@
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/logonew"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
-            android:layout_centerHorizontal="true"/>
+            android:src="@drawable/logonew" />
 
+    </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/persediaanLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/denahLayout"
+        android:layout_marginTop="12dp">
 
+        <TextView
+            android:id="@+id/persediaanTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:text="Kamar Tersedia: "
+            android:textSize="18dp" />
 
-        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/persediaanTxt"
+            android:text="Jumlah Kamar"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/fasilitasLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/persediaanLayout"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp">
+
+        <TextView
+            android:id="@+id/fasilitasTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Fasilitas:"
+            android:textSize="18dp" />
+
+        <RelativeLayout
+            android:id="@+id/fasilitasDetailLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fasilitasTxt"
+            android:layout_marginLeft="8dp">
+
+            <TextView
+                android:id="@+id/kasurTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:drawableLeft="@drawable/icon_kasur"
+                android:drawablePadding="10dp"
+                android:text="Kasur"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/kamarMandiTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/kasurTxt"
+                android:layout_marginBottom="10dp"
+                android:drawableLeft="@drawable/icon_kamar_mandi"
+                android:drawablePadding="10dp"
+                android:text="Kamar Mandi"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/acTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/kamarMandiTxt"
+                android:layout_marginBottom="10dp"
+                android:drawableLeft="@drawable/icon_ac"
+                android:drawablePadding="10dp"
+                android:text="AC"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/wifiTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/acTxt"
+                android:layout_marginBottom="10dp"
+                android:drawableLeft="@drawable/icon_wifi"
+                android:drawablePadding="10dp"
+                android:text="Wifi"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/lemariTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/wifiTxt"
+                android:layout_marginBottom="10dp"
+                android:drawableLeft="@drawable/icon_lemari"
+                android:drawablePadding="10dp"
+                android:text="Lemari"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/mejaKursiTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lemariTxt"
+                android:layout_marginBottom="10dp"
+                android:drawableLeft="@drawable/icon_meja_kursi"
+                android:drawablePadding="10dp"
+                android:text="Meja dan Kursi"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/dapurTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/mejaKursiTxt"
+                android:layout_marginBottom="10dp"
+                android:drawableLeft="@drawable/icon_dapur"
+                android:drawablePadding="10dp"
+                android:text="Dapur Bersama"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/laundryTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dapurTxt"
+                android:layout_marginBottom="10dp"
+                android:drawableLeft="@drawable/icon_laundry"
+                android:drawablePadding="10dp"
+                android:text="Laundry"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/mesinCuciTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/laundryTxt"
+                android:layout_marginBottom="10dp"
+                android:drawableLeft="@drawable/icon_mesin_cuci"
+                android:drawablePadding="10dp"
+                android:text="Mesin Cuci"
+                android:textSize="16dp" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
 
-
-
-</FrameLayout>
+</RelativeLayout>
