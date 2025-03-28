@@ -3,6 +3,7 @@ package com.example.kostku;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -84,6 +85,8 @@ public class KamarFragment extends Fragment {
     private DatePickerDialog datePickerDialog;
     private Button dateButton;
 
+    private Button pesanKamarButton;
+
 //    private FrameLayout flview;
 //    private PLManager plManager;
 
@@ -144,6 +147,15 @@ public class KamarFragment extends Fragment {
 //        panorama.getCamera().lookAt(30.0f, 90.0f);
 //        panorama.setImage(new PLImage(PLUtils.getBitmap(getActivity(), R.drawable.image_pano_test)));
 //        plManager.setPanorama(panorama);
+
+        pesanKamarButton = getView().findViewById(R.id.pesan_kamar_btn);
+        pesanKamarButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view1){
+                Intent intent = new Intent(getActivity(), PesanKamarActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
 

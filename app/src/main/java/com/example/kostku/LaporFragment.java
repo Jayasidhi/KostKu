@@ -71,18 +71,18 @@ public class LaporFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        WebView webView = getView().findViewById(R.id.webView);
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setAllowFileAccess(true);
-        webSettings.setAllowContentAccess(true);
-        webSettings.setDomStorageEnabled(true);
-
-        webView.setWebViewClient(new WebViewClient());
-
-        // Load local HTML file with Panorama JS
-        webView.loadUrl("File:///android_asset/panorama.html");
-        webView.evaluateJavascript("loadPanorama('file:///android_asset/panorama_image.jpg');", null);
+//        WebView webView = getView().findViewById(R.id.webView);
+//        WebSettings webSettings = webView.getSettings();
+//        webSettings.setJavaScriptEnabled(true);
+//        webSettings.setAllowFileAccess(true);
+//        webSettings.setAllowContentAccess(true);
+//        webSettings.setDomStorageEnabled(true);
+//
+//        webView.setWebViewClient(new WebViewClient());
+//
+//        // Load local HTML file with Panorama JS
+//        webView.loadUrl("File:///android_asset/panorama.html");
+//        webView.evaluateJavascript("loadPanorama('file:///android_asset/panorama_image.jpg');", null);
 
     }
 }
