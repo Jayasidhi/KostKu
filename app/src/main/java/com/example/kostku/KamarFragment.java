@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -147,6 +150,22 @@ public class KamarFragment extends Fragment {
 //        panorama.getCamera().lookAt(30.0f, 90.0f);
 //        panorama.setImage(new PLImage(PLUtils.getBitmap(getActivity(), R.drawable.image_pano_test)));
 //        plManager.setPanorama(panorama);
+
+        WebView webView = getView().findViewById(R.id.panoramaWeb);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setAllowFileAccess(true);
+        webSettings.setAllowContentAccess(true);
+        webSettings.setDomStorageEnabled(true);
+
+        webView.setWebViewClient(new WebViewClient());
+//
+//        // Load local HTML file with Panorama JS
+        webView.loadUrl("File:///android_asset/panorama.html");
+//        webView.evaluateJavascript("loadPanorama('file:///android_asset/panorama_image.jpg');", null);
+
+
+
 
         pesanKamarButton = getView().findViewById(R.id.pesan_kamar_btn);
         pesanKamarButton.setOnClickListener(new View.OnClickListener() {

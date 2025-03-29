@@ -123,20 +123,19 @@
 
         </RelativeLayout>
         
-<!--        <RelativeLayout-->
-<!--            android:id="@+id/panoramaLayout"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="250dp"-->
-<!--            android:layout_below="@+id/chooseRoomLayout"-->
-<!--            tools:ignore="WebViewLayout">-->
+        <RelativeLayout
+            android:id="@+id/panoramaLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/chooseRoomLayout">
 
-<!--            <FrameLayout-->
-<!--                android:id="@+id/panoramaView"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"/>-->
+            <WebView
+                android:id="@+id/panoramaWeb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
 
-<!--        </RelativeLayout>-->
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
