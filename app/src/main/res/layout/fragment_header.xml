@@ -27,7 +27,8 @@
             android:layout_centerInParent="true"
             android:text="Hai"
             android:textSize="32dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
 
     </RelativeLayout>
 

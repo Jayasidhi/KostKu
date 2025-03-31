@@ -1,10 +1,13 @@
 package com.example.kostku;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,13 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.RelativeLayout;
+
+import com.example.kostku.model.Laporan;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -83,6 +93,37 @@ public class LaporFragment extends Fragment {
 //        // Load local HTML file with Panorama JS
 //        webView.loadUrl("File:///android_asset/panorama.html");
 //        webView.evaluateJavascript("loadPanorama('file:///android_asset/panorama_image.jpg');", null);
+
+        RelativeLayout buatLaporan = (RelativeLayout) getView().findViewById(R.id.buat_laporan_layout);
+        buatLaporan.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent(getActivity(), BuatLaporanActivity.class);
+                startActivity(intent);
+            }
+
+        });
+
+        RelativeLayout historyLaporan = (RelativeLayout) getView().findViewById(R.id.history_laporan_layout);
+        historyLaporan.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent(getActivity(), HistoryLaporanActivity.class);
+                startActivity(intent);
+            }
+
+        });
+
+
+        RecyclerView recyclerView = view.findViewById(R.id.rvLaporanKost);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        List <Laporan> laporanList = new ArrayList<>();
+        laporanList.add(new Laporan("1", "kamar", "AC Rusak", "Diterima", String.valueOf(new Date())));
+        laporanList.add(new Laporan("2", "kamar", "AC Tidak Dingin", "Diproses", String.valueOf(new Date())));
+        laporanList.add(new Laporan("3", "kamar", "Lemari Patah", "Diterima", String.valueOf(new Date())));
+
+        LaporanAdapter laporanAdapter = new LaporanAdapter(laporanList);
+        recyclerView.setAdapter(laporanAdapter);
+
 
     }
 }

@@ -7,7 +7,7 @@
     tools:context=".PesanKamarActivity">
 
     <fragment
-        android:id="@+id/header_title"
+        android:id="@+id/header_title_pesan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:name="com.example.kostku.HeaderFragment"/>
@@ -16,7 +16,7 @@
         android:id="@+id/form_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/header_title"
+        android:layout_below="@+id/header_title_pesan"
         android:layout_marginTop="18dp">
 
         <RelativeLayout

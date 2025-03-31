@@ -13,6 +13,6 @@
         android:topRightRadius="0dp" />
 
     <!-- Optional, fill the rest of your background with a color or gradient, use transparent if you only want the border to be displayed-->
-    <gradient android:startColor="@color/PrimaryColor"
-        android:endColor="@color/PrimaryColor"/>
+    <gradient android:startColor="@color/SecondaryColor"
+        android:endColor="@color/SecondaryColor"/>
 </shape>

@@ -5,7 +5,19 @@ public class User {
     private String id, username, password;
     private int role;
 
+    public User(String id, String username, String password, int role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
 
+    public User(String id, String username) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
 
     public String getId() {
         return id;

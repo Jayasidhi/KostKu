@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Buat Laporan"
-                android:textSize="24dp"
+                android:textSize="20dp"
                 android:drawableRight="@drawable/round_keyboard_arrow_right_24"/>
 
         </RelativeLayout>
@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="History Laporan"
-                android:textSize="24dp"
+                android:textSize="20dp"
                 android:drawableRight="@drawable/round_keyboard_arrow_right_24"/>
 
         </RelativeLayout>
@@ -66,11 +66,35 @@
             android:layout_marginTop="32dp">
 
             <TextView
+                android:id="@+id/laporanProsesTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Sedang Diproses"
                 android:layout_marginLeft="20dp"
+                android:layout_marginBottom="8dp"
                 android:textSize="16dp"/>
+
+<!--            <View-->
+<!--                android:id="@+id/line1"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="1dp"-->
+<!--                android:background="@android:color/black"-->
+<!--                android:layout_below="@id/laporanProsesTxt"-->
+<!--                android:layout_marginHorizontal="20dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:layout_marginBottom="8dp"/>-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/laporanProsesTxt">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvLaporanKost"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
 
 
 

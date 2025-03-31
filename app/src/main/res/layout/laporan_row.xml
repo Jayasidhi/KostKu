@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="18dp"
+        android:background="@drawable/laporan_button_background">
+
+        <TextView
+            android:id="@+id/laporan_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Judul Laporan"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:gravity="left"/>
+
+        <TextView
+            android:id="@+id/status_laporan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Status Laporan"
+            android:textSize="16dp"
+            android:gravity="right"/>
+
+        <TextView
+            android:id="@+id/isi_laporan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Isi Laporan"
+            android:textSize="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="8dp"
+            android:layout_below="@id/laporan_title"
+            />
+
+        <TextView
+            android:id="@+id/tanggal_laporan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tanggal"
+            android:textSize="16dp"
+            android:layout_below="@+id/isi_laporan"
+            android:layout_alignParentEnd="true"/>
+
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

@@ -26,4 +26,9 @@
         <item>C04</item>
         <item>C05</item>
     </string-array>
+
+    <string-array name="spinnerKategoriLapor">
+        <item>Kamar</item>
+        <item>Fasilitas Umum</item>
+    </string-array>
 </resources>
