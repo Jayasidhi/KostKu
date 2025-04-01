@@ -160,7 +160,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/kategoriTxt"
                 android:layout_marginTop="8dp"
-                android:padding="10dp"
                 android:background="@drawable/rounded_edittext"/>
 
         </RelativeLayout>

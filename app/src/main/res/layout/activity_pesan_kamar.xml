@@ -12,337 +12,383 @@
         android:layout_height="wrap_content"
         android:name="com.example.kostku.HeaderFragment"/>
 
-    <RelativeLayout
-        android:id="@+id/form_layout"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/header_title_pesan"
-        android:layout_marginTop="18dp">
+        android:layout_below="@+id/header_title_pesan">
 
         <RelativeLayout
-            android:id="@+id/form_name_layout"
+            android:id="@+id/form_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="32dp"
-            android:layout_marginBottom="18dp">
+            android:paddingTop="8dp">
 
-            <TextView
-                android:id="@+id/namaTxt"
+            <RelativeLayout
+                android:id="@+id/form_name_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nama"
-                android:textSize="20dp"/>
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginBottom="18dp">
 
-            <EditText
-                android:id="@+id/namaEdt"
+                <TextView
+                    android:id="@+id/namaTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nama"
+                    android:textSize="20dp"/>
+
+                <EditText
+                    android:id="@+id/namaEdt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/namaTxt"
+                    android:layout_marginTop="8dp"
+                    android:autofillHints="username"
+                    android:elevation="6dp"
+                    android:hint="Name"
+                    android:inputType="textPersonName"
+                    android:paddingStart="10dp"
+                    android:background="@drawable/rounded_edittext"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/form_notelp_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/namaTxt"
-                android:layout_marginTop="8dp"
-                android:autofillHints="username"
-                android:elevation="6dp"
-                android:hint="Name"
-                android:inputType="textPersonName"
-                android:paddingStart="10dp"
-                android:background="@drawable/rounded_edittext"/>
+                android:layout_marginHorizontal="32dp"
+                android:layout_below="@+id/form_name_layout"
+                android:layout_marginBottom="18dp">
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/notelpTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nomor Telepon"
+                    android:textSize="20dp"/>
 
-        <RelativeLayout
-            android:id="@+id/form_notelp_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="32dp"
-            android:layout_below="@+id/form_name_layout"
-            android:layout_marginBottom="18dp">
+                <EditText
+                    android:id="@+id/notelpEdt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/notelpTxt"
+                    android:layout_marginTop="8dp"
+                    android:autofillHints="phone"
+                    android:elevation="6dp"
+                    android:hint="Nomor Telepon"
+                    android:inputType="phone"
+                    android:paddingStart="10dp"
+                    android:background="@drawable/rounded_edittext"/>
 
-            <TextView
-                android:id="@+id/notelpTxt"
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/form_tanggal_masuk_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nomor Telepon"
-                android:textSize="20dp"/>
+                android:layout_marginHorizontal="32dp"
+                android:layout_below="@+id/form_notelp_layout"
+                android:layout_marginBottom="18dp">
 
-            <EditText
-                android:id="@+id/notelpEdt"
+                <TextView
+                    android:id="@+id/tanggalMasukTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tanggal Masuk"
+                    android:textSize="20dp"/>
+
+                <TextView
+                    android:id="@+id/tanggalMasukInp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_edittext"
+                    android:layout_below="@+id/tanggalMasukTxt"
+                    android:text="Tanggal Masuk"
+                    android:textSize="18dp"
+                    android:paddingVertical="7dp"
+                    android:paddingHorizontal="10dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/black"/>
+
+                <!--            <EditText-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="40dp"-->
+                <!--                android:layout_below="@+id/tanggalMasukTxt"-->
+                <!--                android:layout_marginTop="10dp"-->
+                <!--                android:autofillHints="phone"-->
+                <!--                android:elevation="6dp"-->
+                <!--                android:hint="Nomor Telepon"-->
+                <!--                android:inputType="phone"-->
+                <!--                android:paddingStart="10dp"-->
+                <!--                android:background="@drawable/rounded_edittext"/>-->
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/form_jumlah_bulan_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/notelpTxt"
-                android:layout_marginTop="8dp"
-                android:autofillHints="phone"
-                android:elevation="6dp"
-                android:hint="Nomor Telepon"
-                android:inputType="phone"
-                android:paddingStart="10dp"
-                android:background="@drawable/rounded_edittext"/>
+                android:layout_marginHorizontal="32dp"
+                android:layout_below="@+id/form_tanggal_masuk_layout"
+                android:layout_marginBottom="24dp">
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/jumlahBulanTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Berapa Bulan"
+                    android:textSize="20dp"/>
 
-        <RelativeLayout
-            android:id="@+id/form_tanggal_masuk_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="32dp"
-            android:layout_below="@+id/form_notelp_layout"
-            android:layout_marginBottom="18dp">
+                <EditText
+                    android:id="@+id/jumlahBulanEdt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/jumlahBulanTxt"
+                    android:layout_marginTop="8dp"
+                    android:elevation="6dp"
+                    android:hint="Jumlah Bulan"
+                    android:inputType="number"
+                    android:paddingStart="10dp"
+                    android:background="@drawable/rounded_edittext"/>
 
-            <TextView
-                android:id="@+id/tanggalMasukTxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tanggal Masuk"
-                android:textSize="20dp"/>
+                <TextView
+                    android:id="@+id/tanggalKeluarTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tanggal Keluar: "
+                    android:layout_below="@+id/jumlahBulanEdt"
+                    android:layout_marginTop="4dp"/>
 
-            <TextView
-                android:id="@+id/tanggalMasukInp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_edittext"
-                android:layout_below="@+id/tanggalMasukTxt"
-                android:text="Tanggal Masuk"
-                android:textSize="18dp"
-                android:paddingVertical="7dp"
-                android:paddingHorizontal="10dp"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/black"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="tanggal"
+                    android:layout_below="@+id/jumlahBulanEdt"
+                    android:layout_toRightOf="@+id/tanggalKeluarTxt"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="4dp"/>
 
-<!--            <EditText-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="40dp"-->
-<!--                android:layout_below="@+id/tanggalMasukTxt"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:autofillHints="phone"-->
-<!--                android:elevation="6dp"-->
-<!--                android:hint="Nomor Telepon"-->
-<!--                android:inputType="phone"-->
-<!--                android:paddingStart="10dp"-->
-<!--                android:background="@drawable/rounded_edittext"/>-->
+            </RelativeLayout>
 
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/form_jumlah_bulan_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="32dp"
-            android:layout_below="@+id/form_tanggal_masuk_layout"
-            android:layout_marginBottom="24dp">
-
-            <TextView
-                android:id="@+id/jumlahBulanTxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Berapa Bulan"
-                android:textSize="20dp"/>
-
-            <EditText
-                android:id="@+id/jumlahBulanEdt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/jumlahBulanTxt"
-                android:layout_marginTop="8dp"
-                android:elevation="6dp"
-                android:hint="Jumlah Bulan"
-                android:inputType="number"
-                android:paddingStart="10dp"
-                android:background="@drawable/rounded_edittext"/>
-
-            <TextView
-                android:id="@+id/tanggalKeluarTxt"
+            <RelativeLayout
+                android:id="@+id/form_lantai_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tanggal Keluar: "
-                android:layout_below="@+id/jumlahBulanEdt"
-                android:layout_marginTop="4dp"/>
+                android:layout_marginHorizontal="32dp"
+                android:layout_below="@+id/form_jumlah_bulan_layout"
+                android:layout_marginBottom="18dp">
 
-            <TextView
+                <TextView
+                    android:id="@+id/lantaiTxt"
+                    android:layout_width="145dp"
+                    android:layout_height="wrap_content"
+                    android:text="Lantai"
+                    android:textSize="20dp"/>
+
+                <TextView
+                    android:id="@+id/lantaiInp"
+                    android:layout_width="145dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_edittext"
+                    android:layout_below="@+id/lantaiTxt"
+                    android:text="Lantai"
+                    android:textSize="18dp"
+                    android:paddingVertical="7dp"
+                    android:paddingHorizontal="10dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/black"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/form_nokamar_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="tanggal"
-                android:layout_below="@+id/jumlahBulanEdt"
-                android:layout_toRightOf="@+id/tanggalKeluarTxt"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="4dp"/>
+                android:layout_marginHorizontal="32dp"
+                android:layout_toRightOf="@+id/form_lantai_layout"
+                android:layout_below="@+id/form_jumlah_bulan_layout"
+                android:layout_marginBottom="18dp">
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/nokamarTxt"
+                    android:layout_width="145dp"
+                    android:layout_height="wrap_content"
+                    android:text="Nomor Kamar"
+                    android:textSize="20dp"/>
 
-        <RelativeLayout
-            android:id="@+id/form_lantai_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="32dp"
-            android:layout_below="@+id/form_jumlah_bulan_layout"
-            android:layout_marginBottom="18dp">
+                <TextView
+                    android:id="@+id/nokamarInp"
+                    android:layout_width="145dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_edittext"
+                    android:layout_below="@+id/nokamarTxt"
+                    android:text="Nomor Kamar"
+                    android:textSize="18dp"
+                    android:paddingVertical="7dp"
+                    android:paddingHorizontal="10dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/black"/>
 
-            <TextView
-                android:id="@+id/lantaiTxt"
-                android:layout_width="145dp"
-                android:layout_height="wrap_content"
-                android:text="Lantai"
-                android:textSize="20dp"/>
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/lantaiInp"
-                android:layout_width="145dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_edittext"
-                android:layout_below="@+id/lantaiTxt"
-                android:text="Lantai"
-                android:textSize="18dp"
-                android:paddingVertical="7dp"
-                android:paddingHorizontal="10dp"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/black"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/form_nokamar_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="32dp"
-            android:layout_toRightOf="@+id/form_lantai_layout"
-            android:layout_below="@+id/form_jumlah_bulan_layout"
-            android:layout_marginBottom="18dp">
-
-            <TextView
-                android:id="@+id/nokamarTxt"
-                android:layout_width="145dp"
-                android:layout_height="wrap_content"
-                android:text="Nomor Kamar"
-                android:textSize="20dp"/>
-
-            <TextView
-                android:id="@+id/nokamarInp"
-                android:layout_width="145dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_edittext"
-                android:layout_below="@+id/nokamarTxt"
-                android:text="Nomor Kamar"
-                android:textSize="18dp"
-                android:paddingVertical="7dp"
-                android:paddingHorizontal="10dp"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/black"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/form_kustom_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="32dp"
-            android:layout_below="@id/form_nokamar_layout"
-            android:layout_marginBottom="18dp">
-
-            <TextView
-                android:id="@+id/tataLetakTxt"
+            <RelativeLayout
+                android:id="@+id/form_kustom_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Pilih Tata Letak"
-                android:textSize="20dp"/>
+                android:layout_marginHorizontal="32dp"
+                android:layout_below="@id/form_nokamar_layout"
+                android:layout_marginBottom="18dp">
+
+                <TextView
+                    android:id="@+id/tataLetakTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pilih Tata Letak"
+                    android:textSize="20dp"/>
+
+                <RadioGroup
+                    android:id="@+id/tataLetakRadioGrp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tataLetakTxt"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/option1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Opsi 1"/>
+
+                    <ImageView
+                        android:id="@+id/option1Image"
+                        android:layout_width="match_parent"
+                        android:layout_height="280dp"
+                        android:src="@drawable/option1"/>
+
+                    <RadioButton
+                        android:id="@+id/option2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Opsi 2"/>
+
+                    <ImageView
+                        android:id="@+id/option2Image"
+                        android:layout_width="match_parent"
+                        android:layout_height="280dp"
+                        android:src="@drawable/option2"/>
+
+
+                    <RadioButton
+                        android:id="@+id/option3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Opsi 3"/>
+
+                    <ImageView
+                        android:id="@+id/option3Image"
+                        android:layout_width="match_parent"
+                        android:layout_height="280dp"
+                        android:src="@drawable/option3"/>
+                </RadioGroup>
 
 
 
-        </RelativeLayout>
+            </RelativeLayout>
 
-        <View
-            android:id="@+id/line1"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/black"
-            android:layout_below="@id/form_kustom_layout"
-            android:layout_marginHorizontal="32dp"
-            android:layout_marginBottom="8dp"/>
-
-        <RelativeLayout
-            android:id="@+id/form_detail_pembayaran_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="32dp"
-            android:layout_below="@id/line1"
-            android:layout_marginBottom="18dp">
-
-            <TextView
-                android:id="@+id/detailPembayaranTxt"
+            <View
+                android:id="@+id/line1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Detail Pembayaran"
-                android:textSize="20dp"
+                android:layout_height="1dp"
+                android:background="@android:color/black"
+                android:layout_below="@id/form_kustom_layout"
+                android:layout_marginHorizontal="32dp"
                 android:layout_marginBottom="8dp"/>
 
-            <TextView
-                android:id="@+id/hargaPerBulanTxt"
+            <RelativeLayout
+                android:id="@+id/form_detail_pembayaran_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Harga Per Bulan: "
-                android:textSize="16dp"
-                android:gravity="left"
-                android:layout_marginBottom="8dp"
-                android:layout_below="@+id/detailPembayaranTxt"/>
+                android:layout_marginHorizontal="32dp"
+                android:layout_below="@id/line1"
+                android:layout_marginBottom="18dp">
 
-            <TextView
-                android:id="@+id/hargaPerBulanNum"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Rp. 3.000.000"
-                android:textSize="16dp"
-                android:gravity="right"
-                android:layout_below="@+id/detailPembayaranTxt"/>
+                <TextView
+                    android:id="@+id/detailPembayaranTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Detail Pembayaran"
+                    android:textSize="20dp"
+                    android:layout_marginBottom="8dp"/>
 
-            <TextView
-                android:id="@+id/totalHargaTxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Total Harga: Rp. "
-                android:textSize="16dp"
-                android:gravity="left"
-                android:layout_marginBottom="8dp"
-                android:layout_below="@+id/hargaPerBulanTxt"/>
+                <TextView
+                    android:id="@+id/hargaPerBulanTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Harga Per Bulan: "
+                    android:textSize="16dp"
+                    android:gravity="left"
+                    android:layout_marginBottom="8dp"
+                    android:layout_below="@+id/detailPembayaranTxt"/>
 
-            <TextView
-                android:id="@+id/totalHargaNum"
+                <TextView
+                    android:id="@+id/hargaPerBulanNum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Rp. 3.000.000"
+                    android:textSize="16dp"
+                    android:gravity="right"
+                    android:layout_below="@+id/detailPembayaranTxt"/>
+
+                <TextView
+                    android:id="@+id/totalHargaTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Total Harga: Rp. "
+                    android:textSize="16dp"
+                    android:gravity="left"
+                    android:layout_marginBottom="8dp"
+                    android:layout_below="@+id/hargaPerBulanTxt"/>
+
+                <TextView
+                    android:id="@+id/totalHargaNum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Rp. 3.000.000"
+                    android:textSize="16dp"
+                    android:gravity="right"
+                    android:layout_below="@+id/hargaPerBulanTxt"/>
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/pembayaran_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Rp. 3.000.000"
-                android:textSize="16dp"
-                android:gravity="right"
-                android:layout_below="@+id/hargaPerBulanTxt"/>
+                android:layout_height="60dp"
+                android:layout_below="@+id/form_detail_pembayaran_layout"
+                android:background="@drawable/pembayaran_button_background"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bayar Rp. "
+                    android:textSize="20dp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="XXXXXX"
+                    android:textSize="20dp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
 
         </RelativeLayout>
 
-
-        <LinearLayout
-            android:id="@+id/pembayaran_layout"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/pembayaran_button_background"
-            android:padding="12dp"
-            android:orientation="horizontal"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Bayar Rp. "
-                android:textSize="20dp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="XXXXXX"
-                android:textSize="20dp"
-                android:textStyle="bold"/>
-
-        </LinearLayout>
-
-
-    </RelativeLayout>
-
-
-
+    </ScrollView>
 
 </RelativeLayout>
