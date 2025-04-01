@@ -46,7 +46,7 @@ public class PesanKamarActivity extends AppCompatActivity {
         pesanKamar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(PesanKamarActivity.this, "Button Clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(PesanKamarActivity.this, "Button Clicked!", Toast.LENGTH_SHORT).show();
                 AlertDialog.Builder builder = new AlertDialog.Builder(PesanKamarActivity.this);
 
                 builder.setTitle("Pesanan Anda Berhasil !");

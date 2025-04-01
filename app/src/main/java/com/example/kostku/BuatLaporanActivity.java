@@ -35,7 +35,7 @@ public class BuatLaporanActivity extends AppCompatActivity {
         buatLaporanButton = findViewById(R.id.lapor_btn);
         buatLaporanButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view1){
-                Toast.makeText(BuatLaporanActivity.this, "Button Clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(BuatLaporanActivity.this, "Button Clicked!", Toast.LENGTH_SHORT).show();
                 AlertDialog.Builder builder = new AlertDialog.Builder(BuatLaporanActivity.this);
 
                 builder.setTitle("Laporan Anda Berhasil Dibuat!");
