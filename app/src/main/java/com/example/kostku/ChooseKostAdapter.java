@@ -21,8 +21,11 @@ public class ChooseKostAdapter extends RecyclerView.Adapter<ChooseKostAdapter.Vi
     private List <Kost> kostList;
     private ChooseKostAdapterListener mChooseKostAdapterListener;
 
-    public ChooseKostAdapter(List<Kost> kostList, ChooseKostAdapterListener chooseKostAdapterListener) {
+    int[] images;
+
+    public ChooseKostAdapter(List<Kost> kostList, int[] images, ChooseKostAdapterListener chooseKostAdapterListener) {
         this.kostList = kostList;
+        this.images = images;
         this.mChooseKostAdapterListener = chooseKostAdapterListener;
     }
 
@@ -40,6 +43,7 @@ public class ChooseKostAdapter extends RecyclerView.Adapter<ChooseKostAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.kostRowName.setText(kostList.get(position).getName());
         holder.kostRowAddress.setText(kostList.get(position).getAddress());
+        holder.kostRowImage.setImageResource(images[position]);
 
         holder.cvKost.setClickable(true);
 
@@ -74,6 +78,7 @@ public class ChooseKostAdapter extends RecyclerView.Adapter<ChooseKostAdapter.Vi
             this.chooseKostAdapterListener = chooseKostAdapterListener;
 
             cvKost.setOnClickListener(this);
+
         }
 
         @Override

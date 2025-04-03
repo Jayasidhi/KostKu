@@ -44,6 +44,17 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
+        TextView loginGuest = findViewById(R.id.guest_login);
+        loginGuest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, ChooseKostActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     private boolean validateLoginField(String username, String password, TextView textView) {

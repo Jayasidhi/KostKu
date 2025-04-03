@@ -15,6 +15,8 @@ import java.util.List;
 
 public class ChooseKostActivity extends AppCompatActivity implements ChooseKostAdapter.ChooseKostAdapterListener{
 
+    int[] kostImage = {R.drawable.logonew, R.drawable.option1, R.drawable.logonew};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +31,7 @@ public class ChooseKostActivity extends AppCompatActivity implements ChooseKostA
         kostList.add(new Kost("2", "Kost 70B", "Jalan kontold fedfmgvm", ""));
         kostList.add(new Kost("3", "Kost 70C", "Jalan kontold fedfmgvm", ""));
 
-        ChooseKostAdapter chooseKostAdapter = new ChooseKostAdapter(kostList, this);
+        ChooseKostAdapter chooseKostAdapter = new ChooseKostAdapter(kostList, kostImage, this);
 
         recyclerView.setAdapter(chooseKostAdapter);
 

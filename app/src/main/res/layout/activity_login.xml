@@ -63,8 +63,9 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginBottom="15dp"
             android:backgroundTint="@color/PrimaryColor"
-            android:hint="Login"
-            android:textSize="20sp" />
+            android:text="Login"
+            android:textSize="20sp"
+            android:textColor="@color/white"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,6 +78,7 @@
                 android:layout_weight="1" />
 
             <TextView
+                android:id="@+id/guest_login"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_gravity="end"
