@@ -6,9 +6,97 @@
     tools:context=".BerandaAdminFragment">
 
     <RelativeLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        android:layout_marginHorizontal="20dp">
 
+        <RelativeLayout
+            android:id="@+id/persediaanLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/persediaanTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kamar Tersedia: "
+                android:textSize="18dp"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_toRightOf="@id/persediaanTxt"
+                android:text="Jumlah Kamar"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/penghasilan_bulan_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Penghasilan Bulan Ini: Rp. "
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="8dp"
+            android:layout_below="@id/persediaanLayout"/>
+
+        <TextView
+            android:id="@+id/penghasilan_bulan_inp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="999.000"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:layout_below="@id/persediaanLayout"
+            android:layout_toRightOf="@+id/penghasilan_bulan_txt"
+            android:layout_marginBottom="8dp"/>
+
+
+        <TextView
+            android:id="@+id/penghasilan_total_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Penghasilan Total: Rp. "
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:layout_below="@+id/penghasilan_bulan_txt"
+            android:layout_marginBottom="18dp"/>
+
+        <TextView
+            android:id="@+id/penghasilan_total_inp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="999.000"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:layout_below="@+id/penghasilan_bulan_inp"
+            android:layout_toRightOf="@+id/penghasilan_total_txt"/>
+
+        <TextView
+            android:id="@+id/expired_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kamar Kost yang akan Habis di Bulan ini:"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:layout_below="@+id/penghasilan_total_txt" />
+
+        <TextView
+            android:id="@+id/expired_kost_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A01, A02, A03"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:layout_below="@+id/expired_txt"/>
 
 
 

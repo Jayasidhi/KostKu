@@ -31,7 +31,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nama"
-                android:textSize="20dp"/>
+                android:textSize="20dp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/namaInp"
@@ -61,7 +62,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nomor Telepon"
-                android:textSize="20dp"/>
+                android:textSize="20dp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/notelpInp"
@@ -91,7 +93,8 @@
                 android:layout_width="145dp"
                 android:layout_height="wrap_content"
                 android:text="Lantai"
-                android:textSize="20dp"/>
+                android:textSize="20dp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/lantaiInp"
@@ -122,7 +125,8 @@
                 android:layout_width="145dp"
                 android:layout_height="wrap_content"
                 android:text="Nomor Kamar"
-                android:textSize="20dp"/>
+                android:textSize="20dp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/nokamarInp"
@@ -152,7 +156,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Kategori"
-                android:textSize="20dp"/>
+                android:textSize="20dp"
+                android:textColor="@color/black"/>
 
             <Spinner
                 android:id="@+id/spinnerRoom"
@@ -177,7 +182,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Detail Keluhan"
-                android:textSize="20dp"/>
+                android:textSize="20dp"
+                android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/keluhanEdt"

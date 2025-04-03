@@ -16,6 +16,7 @@
             android:text="Judul Laporan"
             android:textSize="18dp"
             android:textStyle="bold"
+            android:textColor="@color/black"
             android:gravity="left"/>
 
         <TextView
@@ -24,6 +25,7 @@
             android:layout_height="wrap_content"
             android:text="Status Laporan"
             android:textSize="16dp"
+            android:textColor="@color/black"
             android:gravity="right"/>
 
         <TextView
@@ -32,10 +34,10 @@
             android:layout_height="wrap_content"
             android:text="Isi Laporan"
             android:textSize="16dp"
+            android:textColor="@color/black"
             android:layout_marginTop="4dp"
             android:layout_marginLeft="8dp"
-            android:layout_below="@id/laporan_title"
-            />
+            android:layout_below="@id/laporan_title" />
 
         <TextView
             android:id="@+id/tanggal_laporan"
@@ -43,8 +45,32 @@
             android:layout_height="wrap_content"
             android:text="Tanggal"
             android:textSize="16dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
             android:layout_below="@+id/isi_laporan"
             android:layout_alignParentEnd="true"/>
+
+        <TextView
+            android:id="@+id/kamar_laporan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A01"
+            android:textSize="16dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:layout_below="@+id/isi_laporan"
+            android:layout_alignParentStart="true"/>
+
+        <Button
+            android:id="@+id/done_laporan_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tanggal_laporan"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"
+            android:text="Selesai"
+            android:backgroundTint="@color/PrimaryColor"
+            android:visibility="visible"/>
 
 
     </RelativeLayout>

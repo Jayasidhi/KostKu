@@ -33,6 +33,7 @@
                 android:layout_marginLeft="16dp"
                 android:textStyle="bold"
                 android:textSize="18dp"
+                android:textColor="@color/black"
                 android:layout_centerVertical="true"/>
 
             <Button
@@ -85,6 +86,7 @@
                 android:textSize="18dp"
                 android:layout_marginLeft="16dp"
                 android:textStyle="bold"
+                android:textColor="@color/black"
                 android:layout_centerVertical="true"/>
 
             <Spinner
@@ -111,6 +113,7 @@
                 android:text="Pilih Kamar:"
                 android:textSize="18dp"
                 android:textStyle="bold"
+                android:textColor="@color/black"
                 android:layout_centerVertical="true"/>
 
             <Spinner

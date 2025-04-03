@@ -47,7 +47,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:text="Kamar Tersedia: "
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -56,7 +57,8 @@
                 android:layout_toRightOf="@id/persediaanTxt"
                 android:text="Jumlah Kamar"
                 android:textSize="18dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
 
         </RelativeLayout>
 
@@ -74,7 +76,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="Fasilitas:"
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                android:textColor="@color/black"/>
 
             <RelativeLayout
                 android:id="@+id/fasilitasDetailLayout"
@@ -91,7 +94,8 @@
                     android:drawableLeft="@drawable/icon_kasur"
                     android:drawablePadding="10dp"
                     android:text="Kasur"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/kamarMandiTxt"
@@ -102,7 +106,8 @@
                     android:drawableLeft="@drawable/icon_kamar_mandi"
                     android:drawablePadding="10dp"
                     android:text="Kamar Mandi"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/acTxt"
@@ -113,7 +118,8 @@
                     android:drawableLeft="@drawable/icon_ac"
                     android:drawablePadding="10dp"
                     android:text="AC"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/wifiTxt"
@@ -124,7 +130,8 @@
                     android:drawableLeft="@drawable/icon_wifi"
                     android:drawablePadding="10dp"
                     android:text="Wifi"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/lemariTxt"
@@ -135,7 +142,8 @@
                     android:drawableLeft="@drawable/icon_lemari"
                     android:drawablePadding="10dp"
                     android:text="Lemari"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/mejaKursiTxt"
@@ -146,7 +154,8 @@
                     android:drawableLeft="@drawable/icon_meja_kursi"
                     android:drawablePadding="10dp"
                     android:text="Meja dan Kursi"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/dapurTxt"
@@ -157,7 +166,8 @@
                     android:drawableLeft="@drawable/icon_dapur"
                     android:drawablePadding="10dp"
                     android:text="Dapur Bersama"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/laundryTxt"
@@ -168,7 +178,8 @@
                     android:drawableLeft="@drawable/icon_laundry"
                     android:drawablePadding="10dp"
                     android:text="Laundry"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/mesinCuciTxt"
@@ -179,7 +190,8 @@
                     android:drawableLeft="@drawable/icon_mesin_cuci"
                     android:drawablePadding="10dp"
                     android:text="Mesin Cuci"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:textColor="@color/black"/>
 
             </RelativeLayout>
 

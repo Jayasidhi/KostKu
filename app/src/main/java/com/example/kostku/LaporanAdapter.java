@@ -1,9 +1,12 @@
 package com.example.kostku;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,6 +58,38 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
             rowIsiKeluhan = itemView.findViewById(R.id.isi_laporan);
             rowStatusLaporan = itemView.findViewById(R.id.status_laporan);
             date = itemView.findViewById(R.id.tanggal_laporan);
+
+
+            itemView.findViewById(R.id.done_laporan_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(view.getContext(), "Button Clicked!", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    builder.setTitle("Apakah Laporan Telah Selesai Diproses ?");
+
+                    builder.setPositiveButton("Sudah", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Toast.makeText(view.getContext(), "Thank You!", Toast.LENGTH_SHORT).show();
+                            itemView.findViewById(R.id.done_laporan_button).setVisibility(View.GONE);
+                            // logic update status dan pindah ke history
+                        }
+                    });
+
+                    builder.setNegativeButton("Belum", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Toast.makeText(view.getContext(), "Thank You!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    builder.show();
+                }
+            });
+
+
+//
+
         }
     }
 }

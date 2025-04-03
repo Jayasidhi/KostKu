@@ -22,14 +22,15 @@
             android:exported="false" />
         <activity
             android:name=".BuatLaporanActivity"
-            android:exported="false" /> <!-- <activity -->
-        <!-- android:name=".ChooseKostActivity" -->
-        <!-- android:exported="false" /> -->
-        <!-- <activity -->
-        <!-- android:name=".HomeActivity" -->
-        <!-- android:exported="false" /> -->
+            android:exported="false" />
+         <activity
+         android:name=".ChooseKostActivity"
+         android:exported="false" />
+         <activity
+         android:name=".HomeActivity"
+         android:exported="false" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
