@@ -1,6 +1,7 @@
 package com.example.kostku;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +14,23 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kostku.model.Kost;
+import com.example.kostku.model.UserSession;
 
 import java.util.List;
 
 public class ChooseKostAdapter extends RecyclerView.Adapter<ChooseKostAdapter.ViewHolder> {
 
-    private List <Kost> kostList;
+    private static List <Kost> kostList;
     private ChooseKostAdapterListener mChooseKostAdapterListener;
 
     int[] images;
 
     public ChooseKostAdapter(List<Kost> kostList, int[] images, ChooseKostAdapterListener chooseKostAdapterListener) {
+        if(kostList.size() > 0){
+            Log.d("D", "ChooseKostAdapter: " + kostList.get(0).getAddress());
+        }else {
+            Log.d("D", "ChooseKostAdapter: " + "data kosong");
+        }
         this.kostList = kostList;
         this.images = images;
         this.mChooseKostAdapterListener = chooseKostAdapterListener;

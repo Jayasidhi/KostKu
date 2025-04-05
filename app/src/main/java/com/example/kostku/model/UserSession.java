@@ -6,6 +6,8 @@ public class UserSession {
     private String username;
     private int role;
 
+    private String idKost;
+
     public static UserSession getInstance() {
         if (userSession == null) {
             userSession = new UserSession();
@@ -16,9 +18,10 @@ public class UserSession {
     public UserSession() {
     }
 
-    public UserSession(String username, int role) {
+    public UserSession(String username, int role, String idKost) {
         this.username = username;
         this.role = role;
+        this.idKost = idKost;
     }
 
     public String getUsername() {
@@ -35,5 +38,13 @@ public class UserSession {
 
     public void setRole(int role) {
         this.role = role;
+    }
+
+    public String getIdKost() {
+        return idKost;
+    }
+
+    public void setIdKost(String idKost) {
+        this.idKost = idKost;
     }
 }

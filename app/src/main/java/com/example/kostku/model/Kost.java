@@ -1,13 +1,15 @@
 package com.example.kostku.model;
 
+import com.google.firebase.database.DataSnapshot;
+
 public class Kost {
     private String id, name, address;
     private String photo;
 
-    public Kost(String id, String name, String address, String photo) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
+    public Kost(DataSnapshot kostSnapshot) {
+        this.id = kostSnapshot.getKey().toString();
+        this.name = kostSnapshot.child("name").getValue().toString();
+        this.address = kostSnapshot.child("address").getValue().toString();
 //        this.photo = photo;
     }
 

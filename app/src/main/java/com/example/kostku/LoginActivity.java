@@ -58,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("fdatabase", "onDataChange: " + userSession.getRole());
                     Intent intent = new Intent(LoginActivity.this, ChooseKostActivity.class);
                     startActivity(intent);
+                    finish();
                 }
 
 
@@ -82,8 +83,8 @@ public class LoginActivity extends AppCompatActivity {
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NotNull DataSnapshot snapshot) {
-                for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
-                    User user = new User(categorySnapshot);
+                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                    User user = new User(userSnapshot);
                     users.add(user);
                     Log.d("fdatabase", "onDataChange: " + user.getUsername());
                     Log.d("fdatabase", "onDataChange: " + user.getPassword());
