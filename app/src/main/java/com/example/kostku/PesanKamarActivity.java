@@ -18,6 +18,10 @@ public class PesanKamarActivity extends AppCompatActivity {
 
     RadioGroup radioGroup;
     RadioButton radio1, radio2, radio3;
+    TextView tanggalMasuk;
+    TextView lantai;
+    TextView kamar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,21 @@ public class PesanKamarActivity extends AppCompatActivity {
 
         TextView header = findViewById(R.id.textHeader);
         header.setText("Pesan Kamar");
+
+        String choosenDate = getIntent().getStringExtra("tanggal_masuk");
+        String choosenFloor = getIntent().getStringExtra("lantai");
+        String choosenRoom = getIntent().getStringExtra("kamar");
+
+        tanggalMasuk = findViewById(R.id.tanggalMasukInp);
+        tanggalMasuk.setText(choosenDate);
+
+        lantai = findViewById(R.id.lantaiInp);
+        lantai.setText(choosenFloor);
+
+        kamar = findViewById(R.id.nokamarInp);
+        kamar.setText(choosenRoom);
+
+
 
         radioGroup = findViewById(R.id.tataLetakRadioGrp);
         radio1 = findViewById(R.id.option1);

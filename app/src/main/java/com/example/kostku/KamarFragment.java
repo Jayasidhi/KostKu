@@ -35,6 +35,7 @@ import com.google.firebase.database.annotations.NotNull;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class KamarFragment extends Fragment {
 
@@ -46,6 +47,8 @@ public class KamarFragment extends Fragment {
     private DatePickerDialog datePickerDialog;
     private Button dateButton;
     private Button pesanKamarButton;
+    private String choosenDate;
+    private String choosenRoom;
 
     public KamarFragment() {
         // Required empty public constructor
@@ -108,7 +111,7 @@ public class KamarFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String spinnerValue = adapterView.getItemAtPosition(i).toString();
-
+                choosenRoom = spinnerValue;
                 Toast.makeText(getActivity(), "Selected item" + spinnerValue, Toast.LENGTH_SHORT).show();
                 Log.d("floor", "onViewCreated: room selected : " + spinnerKamar.getSelectedItem().toString());
             }
@@ -135,6 +138,9 @@ public class KamarFragment extends Fragment {
         pesanKamarButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view1) {
                 Intent intent = new Intent(getActivity(), PesanKamarActivity.class);
+                intent.putExtra("tanggal_masuk", choosenDate);
+                intent.putExtra("lantai", choosenFloor);
+                intent.putExtra("kamar", choosenRoom);
                 startActivity(intent);
             }
         });
@@ -180,7 +186,9 @@ public class KamarFragment extends Fragment {
         month = month + 1;
         int day = cal.get(Calendar.DAY_OF_MONTH);
 
-        return makeDateString(day, month, year);
+        choosenDate = makeDateString(day, month, year);
+
+        return choosenDate;
     }
 
     private void initDatePicker() {
@@ -194,6 +202,7 @@ public class KamarFragment extends Fragment {
 
                 // dibawah ini untuk validasi output kamar apa aja yang avail
                 getTempRooms();
+                choosenDate = date;
             }
         };
 
