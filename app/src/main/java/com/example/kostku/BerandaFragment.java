@@ -1,5 +1,6 @@
 package com.example.kostku;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,12 +12,25 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.kostku.model.Room;
+import com.example.kostku.model.UserSession;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.NotNull;
+
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link BerandaFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class BerandaFragment extends Fragment {
+    private DatabaseReference mDatabase;
+    private ArrayList<Room> rooms = new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -55,6 +69,7 @@ public class BerandaFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fetchDataFromFirebase();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -65,8 +80,6 @@ public class BerandaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-//        persediaan = getArguments().getInt("jumlah");
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_beranda, container, false);
     }
@@ -74,11 +87,49 @@ public class BerandaFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        persediaan = getArguments().getInt("jumlah");
-        Log.d("d", "onViewCreated: jumlah " + persediaan);
         jumlahKamar = view.findViewById(R.id.persediaanInp);
         jumlahKamar.setText(String.valueOf(persediaan));
 
+    }
+
+    public void countPersediaanKamar() {
+        persediaan = 0;
+        String currentKost = UserSession.getInstance().getIdKost();
+        for (Room room : rooms) {
+            Log.d("d", "countPersediaanKamar: " + room.getKost_id() + " " + currentKost);
+            if (room.getKost_id().equals(currentKost)) {
+                persediaan++;
+                Log.d("d", "countPersediaanKamar: hasil " + persediaan);
+            }
+        }
+        jumlahKamar.setText(String.valueOf(persediaan));
+    }
+
+    private boolean fetchDataFromFirebase() {
+        mDatabase = FirebaseDatabase.getInstance("https://kostku-89690-default-rtdb.firebaseio.com/").getReference().child("room");
+
+        ValueEventListener postListener = new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onDataChange(@NotNull DataSnapshot snapshot) {
+                for (DataSnapshot roomSnapshot : snapshot.getChildren()) {
+                    Room room = new Room(roomSnapshot);
+                    rooms.add(room);
+                    Log.d("fdatabase", "onDataChange: " + room.getName());
+                    Log.d("fdatabase", "onDataChange: " + room.getFloor());
+                    Log.d("fdatabase", "onDataChange: " + room.getKost_id());
+                }
+                countPersediaanKamar();
+            }
+
+
+            @Override
+            public void onCancelled(@NotNull DatabaseError error) {
+                Log.d("fdatabase", "onDataChange: " + error.getMessage());
+            }
+        };
+        mDatabase.addValueEventListener(postListener);
+        return true;
     }
 
 
