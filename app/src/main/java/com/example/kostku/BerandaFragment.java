@@ -1,18 +1,15 @@
 package com.example.kostku;
 
-import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.Calendar;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +26,9 @@ public class BerandaFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    TextView jumlahKamar;
+    private int persediaan;
 
     public BerandaFragment() {
         // Required empty public constructor
@@ -66,9 +66,19 @@ public class BerandaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
+//        persediaan = getArguments().getInt("jumlah");
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_beranda, container, false);
+    }
+
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        persediaan = getArguments().getInt("jumlah");
+        Log.d("d", "onViewCreated: jumlah " + persediaan);
+        jumlahKamar = view.findViewById(R.id.persediaanInp);
+        jumlahKamar.setText(String.valueOf(persediaan));
+
     }
 
 
