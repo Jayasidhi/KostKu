@@ -1,13 +1,10 @@
 package com.example.kostku;
 
-import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
@@ -16,18 +13,12 @@ import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-//import com.panoramagl.PLImage;
-//import com.panoramagl.PLManager;
-//import com.panoramagl.PLSphericalPanorama;
-//import com.panoramagl.utils.PLUtils;
 
 import java.util.Calendar;
 
@@ -87,39 +78,11 @@ public class KamarFragment extends Fragment {
 
     private DatePickerDialog datePickerDialog;
     private Button dateButton;
-
     private Button pesanKamarButton;
-
-//    private FrameLayout flview;
-//    private PLManager plManager;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//         Initialize DatePicker from layout
-//        DatePicker datePicker = getView().findViewById(R.id.datePicker);
-
-//         Get today's date using Calendar instance
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.add(Calendar.DAY_OF_MONTH, +1);
-//        long limit = calendar.getTimeInMillis();
-//
-//        datePicker.setMinDate(limit);
-
-//         Initialize DatePicker with the current date
-//        datePicker.init(
-//                calendar.get(Calendar.YEAR),
-//                calendar.get(Calendar.MONTH),
-//                calendar.get(Calendar.DAY_OF_MONTH),
-//                new DatePicker.OnDateChangedListener() {
-//                    @Override
-//                    public void onDateChanged(DatePicker view, int year, int month, int day) {
-//                        // Display selected date in Toast message
-//                        String msg = "You Selected: " + day + "/" + (month + 1) + "/" + year;
-//                        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//        );
 
         initDatePicker();
         dateButton = getView().findViewById(R.id.datePickerButton);
@@ -143,14 +106,6 @@ public class KamarFragment extends Fragment {
         adapterLantai.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerKamar.setAdapter(adapterKamar);
 
-//        flview = getView().findViewById(R.id.panoramaView);
-//        initialisePlManager();
-//
-//        PLSphericalPanorama panorama = new PLSphericalPanorama();
-//        panorama.getCamera().lookAt(30.0f, 90.0f);
-//        panorama.setImage(new PLImage(PLUtils.getBitmap(getActivity(), R.drawable.image_pano_test)));
-//        plManager.setPanorama(panorama);
-
         WebView webView = getView().findViewById(R.id.panoramaWeb);
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -159,50 +114,18 @@ public class KamarFragment extends Fragment {
         webSettings.setDomStorageEnabled(true);
 
         webView.setWebViewClient(new WebViewClient());
-//
-//        // Load local HTML file with Panorama JS
+        // Load local HTML file with Panorama JS
         webView.loadUrl("File:///android_asset/panorama.html");
-//        webView.evaluateJavascript("loadPanorama('file:///android_asset/panorama_image.jpg');", null);
-
-
-
 
         pesanKamarButton = getView().findViewById(R.id.pesan_kamar_btn);
         pesanKamarButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view1){
+            public void onClick(View view1) {
                 Intent intent = new Intent(getActivity(), PesanKamarActivity.class);
                 startActivity(intent);
             }
         });
 
-
     }
-
-//    private void initialisePlManager() {
-//        plManager = new PLManager(getActivity());
-//        plManager.setContentView(flview);
-//        plManager.onCreate();
-//        plManager.setScrollingEnabled(true);
-//        plManager.setAccelerometerEnabled(false);
-//        plManager.setZoomEnabled(true);
-//        plManager.setInertiaEnabled(true);
-//        plManager.setAcceleratedTouchScrollingEnabled(false);
-//    }
-//    public boolean onTouchEvent(MotionEvent event) {
-//        return plManager.onTouchEvent(event);
-//    }
-//
-//    public void onResume() {
-//        super.onResume();
-//        if (plManager != null) {
-//            plManager.onResume();
-//        }
-//    }
-//
-//    public void onDestroy() {
-//        super.onDestroy();
-//        plManager.onDestroy();
-//    }
 
     private String getTodaysDate() {
         Calendar cal = Calendar.getInstance();
