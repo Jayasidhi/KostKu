@@ -23,7 +23,7 @@ public class BuatLaporanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_buat_laporan);
 
 
-        Spinner spinnerKategori = findViewById(R.id.spinnerRoom);
+        Spinner spinnerKategori = findViewById(R.id.spinnerCategory);
         ArrayAdapter<CharSequence> adapterKategori = ArrayAdapter.createFromResource(this, R.array.spinnerKategoriLapor, android.R.layout.simple_spinner_dropdown_item);
         adapterKategori.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerKategori.setAdapter(adapterKategori);
