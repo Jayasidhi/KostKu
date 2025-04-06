@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 /**
@@ -42,7 +43,7 @@ public class BerandaFragment extends Fragment {
     private String mParam2;
 
     TextView jumlahKamar;
-    private int persediaan;
+    private int persediaan = 0;
 
     public BerandaFragment() {
         // Required empty public constructor
@@ -96,10 +97,10 @@ public class BerandaFragment extends Fragment {
         persediaan = 0;
         String currentKost = UserSession.getInstance().getIdKost();
         for (Room room : rooms) {
-            Log.d("d", "countPersediaanKamar: " + room.getKost_id() + " " + currentKost);
-            if (room.getKost_id().equals(currentKost)) {
+//            Log.d("d", "countPersediaanKamar: " + room.getKost_id() + " " + currentKost);
+            if (room.getKost_id().equals(currentKost) && !room.getIsbooked()) {
                 persediaan++;
-                Log.d("d", "countPersediaanKamar: hasil " + persediaan);
+//                Log.d("d", "countPersediaanKamar: hasil " + persediaan);
             }
         }
         jumlahKamar.setText(String.valueOf(persediaan));
@@ -113,7 +114,12 @@ public class BerandaFragment extends Fragment {
             @Override
             public void onDataChange(@NotNull DataSnapshot snapshot) {
                 for (DataSnapshot roomSnapshot : snapshot.getChildren()) {
-                    Room room = new Room(roomSnapshot);
+                    Room room = null;
+                    try {
+                        room = new Room(roomSnapshot);
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
                     rooms.add(room);
                     Log.d("fdatabase", "onDataChange: " + room.getName());
                     Log.d("fdatabase", "onDataChange: " + room.getFloor());

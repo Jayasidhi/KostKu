@@ -1,15 +1,18 @@
 package com.example.kostku;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -20,6 +23,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.kostku.model.Room;
+import com.example.kostku.model.UserSession;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.NotNull;
+
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -29,6 +43,16 @@ import java.util.Calendar;
  */
 public class KamarFragment extends Fragment {
 
+    private DatabaseReference mDatabase;
+    private ArrayList<Room> rooms = new ArrayList<>();
+    private ArrayList<String> roomFloor = new ArrayList<>();
+    private ArrayAdapter<String> adapterKamar;
+    String choosenFloor = null;
+
+    private DatePickerDialog datePickerDialog;
+    private Button dateButton;
+    private Button pesanKamarButton;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -37,6 +61,7 @@ public class KamarFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
 
     public KamarFragment() {
         // Required empty public constructor
@@ -63,6 +88,7 @@ public class KamarFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fetchDataFromFirebase();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -75,10 +101,6 @@ public class KamarFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_kamar, container, false);
     }
-
-    private DatePickerDialog datePickerDialog;
-    private Button dateButton;
-    private Button pesanKamarButton;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -99,12 +121,42 @@ public class KamarFragment extends Fragment {
         Spinner spinnerLantai = (Spinner) getView().findViewById(R.id.spinnerFloor);
         ArrayAdapter<CharSequence> adapterLantai = ArrayAdapter.createFromResource(getActivity(), R.array.spinnerFloor, android.R.layout.simple_spinner_dropdown_item);
         adapterLantai.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerLantai.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                choosenFloor = spinnerLantai.getSelectedItem().toString();
+                getTempRooms();
+                Log.d("floor", "onViewCreated: floor selected : " + choosenFloor);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         spinnerLantai.setAdapter(adapterLantai);
 
-        Spinner spinnerKamar = (Spinner) getView().findViewById(R.id.spinnerRoom);
-        ArrayAdapter<CharSequence> adapterKamar = ArrayAdapter.createFromResource(getActivity(), R.array.spinnerRoom, android.R.layout.simple_spinner_dropdown_item);
-        adapterLantai.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        Spinner spinnerKamar = getView().findViewById(R.id.spinnerRoom);
+        adapterKamar = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, roomFloor);
+        adapterKamar.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Log.d("floor", "onViewCreated: room selected test: " + spinnerKamar);
         spinnerKamar.setAdapter(adapterKamar);
+        spinnerKamar.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String spinnerValue = adapterView.getItemAtPosition(i).toString();
+
+                Toast.makeText(getActivity(), "Selected item" + spinnerValue, Toast.LENGTH_SHORT).show();
+                Log.d("floor", "onViewCreated: room selected : " + spinnerKamar.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Log.d("floor", "onViewCreated: room no selected : ");
+            }
+        });
+        adapterKamar.notifyDataSetChanged();
 
         WebView webView = getView().findViewById(R.id.panoramaWeb);
         WebSettings webSettings = webView.getSettings();
@@ -127,6 +179,38 @@ public class KamarFragment extends Fragment {
 
     }
 
+    private boolean fetchDataFromFirebase() {
+        mDatabase = FirebaseDatabase.getInstance("https://kostku-89690-default-rtdb.firebaseio.com/").getReference().child("room");
+
+        ValueEventListener postListener = new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onDataChange(@NotNull DataSnapshot snapshot) {
+                for (DataSnapshot roomSnapshot : snapshot.getChildren()) {
+                    Room room = null;
+                    try {
+                        room = new Room(roomSnapshot);
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                    rooms.add(room);
+                    Log.d("fdatabase", "onDataChange: " + room.getName());
+                    Log.d("fdatabase", "onDataChange: " + room.getFloor());
+                    Log.d("fdatabase", "onDataChange: " + room.getKost_id());
+                }
+            }
+
+
+            @Override
+            public void onCancelled(@NotNull DatabaseError error) {
+                Log.d("fdatabase", "onDataChange: " + error.getMessage());
+            }
+        };
+        mDatabase.addValueEventListener(postListener);
+        return true;
+    }
+
+
     private String getTodaysDate() {
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
@@ -147,7 +231,7 @@ public class KamarFragment extends Fragment {
                 Toast.makeText(getActivity(), date, Toast.LENGTH_LONG).show();
 
                 // dibawah ini untuk validasi output kamar apa aja yang avail
-
+                getTempRooms();
             }
         };
 
@@ -159,6 +243,20 @@ public class KamarFragment extends Fragment {
         datePickerDialog = new DatePickerDialog(getActivity(), R.style.SpinnerDatePickerDialogTheme, dateSetListener, year, month, day);
         datePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis());
         datePickerDialog.setTitle("Tanggal");
+    }
+
+    private void getTempRooms() {
+        roomFloor.clear();
+        for (Room room : rooms) {
+            if (UserSession.getInstance().getIdKost().equals(room.getKost_id()) && room.getFloor().equals(choosenFloor.substring(7)) && !room.getIsbooked()) {
+                roomFloor.add(room.getName());
+            }
+        }
+
+        // Kasih tahu adapter bahwa data telah berubah
+        if (adapterKamar != null) {
+            adapterKamar.notifyDataSetChanged();
+        }
     }
 
     private String makeDateString(int day, int month, int year) {
