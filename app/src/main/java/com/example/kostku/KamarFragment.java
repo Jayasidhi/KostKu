@@ -32,10 +32,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 public class KamarFragment extends Fragment {
 
@@ -47,7 +45,7 @@ public class KamarFragment extends Fragment {
     private DatePickerDialog datePickerDialog;
     private Button dateButton;
     private Button pesanKamarButton;
-    private String choosenDate;
+    private String choosenDate; //01-01-2020
     private String choosenRoom;
 
     public KamarFragment() {
@@ -156,11 +154,7 @@ public class KamarFragment extends Fragment {
             public void onDataChange(@NotNull DataSnapshot snapshot) {
                 for (DataSnapshot roomSnapshot : snapshot.getChildren()) {
                     Room room = null;
-                    try {
-                        room = new Room(roomSnapshot);
-                    } catch (ParseException e) {
-                        throw new RuntimeException(e);
-                    }
+                    room = new Room(roomSnapshot);
                     rooms.add(room);
                     Log.d("fdatabase", "onDataChange: " + room.getName());
                     Log.d("fdatabase", "onDataChange: " + room.getFloor());
@@ -188,7 +182,7 @@ public class KamarFragment extends Fragment {
 
         choosenDate = makeDateString(day, month, year);
 
-        return choosenDate;
+        return dateStringDisplayFormat(choosenDate);
     }
 
     private void initDatePicker() {
@@ -197,7 +191,7 @@ public class KamarFragment extends Fragment {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
                 String date = makeDateString(day, month, year);
-                dateButton.setText(date);
+                dateButton.setText(dateStringDisplayFormat(date));
                 Toast.makeText(getActivity(), date, Toast.LENGTH_LONG).show();
 
                 // dibawah ini untuk validasi output kamar apa aja yang avail
@@ -230,9 +224,14 @@ public class KamarFragment extends Fragment {
         }
     }
 
-    private String makeDateString(int day, int month, int year) {
-        return day + " " + getMonthFormat(month) + " " + year;
-
+    private static String makeDateString(int day, int month, int year) {
+        String date = null;
+        date = day < 10 ? "0" + day : day + "";
+        date += "-";
+        date += month < 10 ? "0" + month : month;
+        date += "-";
+        date += year;
+        return date;
     }
 
     private String getMonthFormat(int month) {
@@ -263,5 +262,11 @@ public class KamarFragment extends Fragment {
 
         //default should never happen
         return "JAN";
+    }
+
+    //method ubah 01-01-2020 ke 01 JAN 2020
+    private String dateStringDisplayFormat(String date) {
+        int month = Integer.parseInt(date.substring(3, 5));
+        return date.substring(0, 2) + " " + getMonthFormat(month) + " " + date.substring(6, 10);
     }
 }

@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.kostku.model.Room;
+import com.example.kostku.model.Transaction;
 import com.example.kostku.model.UserSession;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 public class BerandaFragment extends Fragment {
     private DatabaseReference mDatabase;
     private ArrayList<Room> rooms = new ArrayList<>();
+    private ArrayList<Transaction> transactions = new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -71,6 +73,7 @@ public class BerandaFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fetchDataFromFirebase();
+        fetchDataTransactionFromFirebase();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -115,11 +118,7 @@ public class BerandaFragment extends Fragment {
             public void onDataChange(@NotNull DataSnapshot snapshot) {
                 for (DataSnapshot roomSnapshot : snapshot.getChildren()) {
                     Room room = null;
-                    try {
-                        room = new Room(roomSnapshot);
-                    } catch (ParseException e) {
-                        throw new RuntimeException(e);
-                    }
+                    room = new Room(roomSnapshot);
                     rooms.add(room);
                     Log.d("fdatabase", "onDataChange: " + room.getName());
                     Log.d("fdatabase", "onDataChange: " + room.getFloor());
@@ -138,5 +137,37 @@ public class BerandaFragment extends Fragment {
         return true;
     }
 
+    private boolean fetchDataTransactionFromFirebase() {
+        mDatabase = FirebaseDatabase.getInstance("https://kostku-89690-default-rtdb.firebaseio.com/").getReference().child("transaction");
+
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot transactionSnapshot : snapshot.getChildren()){
+                    Transaction transaction = null;
+                    transaction = new Transaction(transactionSnapshot);
+                    transactions.add(transaction);
+                    Log.d("Tdatabase", "onDataChange: Transaction ID: " + transaction.getId());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getName());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getPhoneNumber());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getCheckin_date());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getCheckout_date());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getRoomFloor());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getRoomNumber());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getRoomOption());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getBasePrice());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getTotalPrice());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getKostId());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("fdatabase", "onDataChange: " + error.getMessage());
+            }
+        };
+        mDatabase.addValueEventListener(postListener);
+        return true;
+    }
 
 }

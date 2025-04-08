@@ -1,17 +1,12 @@
 package com.example.kostku;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -21,10 +16,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.kostku.model.Transaction;
+import com.example.kostku.model.UserSession;
 
 import java.text.DecimalFormat;
-import java.util.Objects;
 
 public class PesanKamarActivity extends AppCompatActivity {
 
@@ -39,6 +36,9 @@ public class PesanKamarActivity extends AppCompatActivity {
     long basePrice = 3000000;
     private DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
     private ScrollView scrollView;
+    private String roomOption;
+    private long totalPrice;
+    private UserSession userSession = UserSession.getInstance();
 
 
     @Override
@@ -54,7 +54,7 @@ public class PesanKamarActivity extends AppCompatActivity {
         String choosenRoom = getIntent().getStringExtra("kamar");
 
         tanggalMasuk = findViewById(R.id.tanggalMasukInp);
-        tanggalMasuk.setText(choosenDate);
+        tanggalMasuk.setText(dateStringDisplayFormat(choosenDate));
 
         lantai = findViewById(R.id.lantaiInp);
         lantai.setText(choosenFloor);
@@ -91,14 +91,15 @@ public class PesanKamarActivity extends AppCompatActivity {
                 }
                 isValidBulan = true;
                 tv_error_bulan.setVisibility(View.GONE);
-                totalPriceTxt.setText("Rp " + decimalFormat.format(countTotalPrice(Integer.parseInt(countMonth.getText().toString()), basePrice)));
-                totalPriceTxt1.setText(decimalFormat.format(countTotalPrice(Integer.parseInt(countMonth.getText().toString()), basePrice)));
+                totalPrice = countTotalPrice(Integer.parseInt(countMonth.getText().toString()), basePrice);
+                totalPriceTxt.setText("Rp " + decimalFormat.format(totalPrice));
+                totalPriceTxt1.setText(decimalFormat.format(totalPrice));
                 tv_checkout_date.setText(countCheckoutDate(Integer.parseInt(countMonth.getText().toString()), choosenDate));
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if(countMonth.getText().toString().isEmpty()){
+                if (countMonth.getText().toString().isEmpty()) {
                     tv_error_bulan.setText("Harap Masukkan Jumlah Bulan yang Diinginkan!");
                     tv_error_bulan.setVisibility(View.VISIBLE);
                     isValidBulan = false;
@@ -136,10 +137,11 @@ public class PesanKamarActivity extends AppCompatActivity {
                 Toast.makeText(this, "Option 3 Selected", Toast.LENGTH_SHORT).show();
                 isValidRadio = true;
             } else {
-                tv_error_radio.setText("Silahkan Pilih Opsi Tata Ltak!");
+                tv_error_radio.setText("Silahkan Pilih Opsi Tata Letak!");
                 tv_error_radio.setVisibility(View.VISIBLE);
                 isValidRadio = false;
             }
+            roomOption = String.valueOf(checkedId);
         });
 
         LinearLayout pesanKamar = findViewById(R.id.pembayaran_layout);
@@ -147,7 +149,14 @@ public class PesanKamarActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(isValidNama && isValidNotelp && isValidBulan && isValidRadio){
+                if (isValidNama && isValidNotelp && isValidBulan && isValidRadio) {
+
+                    // buat user, update db kamar, masukin db transaksi
+
+                    Transaction transaction = new Transaction(namaEdt.getText().toString(), notelpEdt.getText().toString(), choosenFloor, choosenRoom,
+                            roomOption, String.valueOf(basePrice), String.valueOf(totalPrice), userSession.getIdKost(), choosenDate, checkout_date);
+
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(PesanKamarActivity.this);
 
                     builder.setTitle("Pesanan Anda Berhasil !");
@@ -166,12 +175,12 @@ public class PesanKamarActivity extends AppCompatActivity {
                     builder.show();
                 } else {
                     scrollView.fullScroll(View.FOCUS_UP);
-                    if(!isValidNama){
+                    if (!isValidNama) {
                         tv_error_nama.setText("Nama Tidak Boleh Kosong!");
                         tv_error_nama.setVisibility(View.VISIBLE);
                     }
-                    if(!isValidNotelp){
-                        if(notelpEdt.getText().toString().isEmpty()){
+                    if (!isValidNotelp) {
+                        if (notelpEdt.getText().toString().isEmpty()) {
                             tv_error_notelp.setText("Nomor Telepon Tidak Boleh Kosong!");
                             tv_error_notelp.setVisibility(View.VISIBLE);
                         } else {
@@ -179,11 +188,11 @@ public class PesanKamarActivity extends AppCompatActivity {
                             tv_error_notelp.setVisibility(View.VISIBLE);
                         }
                     }
-                    if(!isValidBulan){
+                    if (!isValidBulan) {
                         tv_error_bulan.setText("Harap Masukkan Jumlah Bulan yang Diinginkan!");
                         tv_error_bulan.setVisibility(View.VISIBLE);
                     }
-                    if(!isValidRadio){
+                    if (!isValidRadio) {
                         tv_error_radio.setText("Harap Memilih Salah Satu Opsi!");
                         tv_error_radio.setVisibility(View.VISIBLE);
                     }
@@ -248,29 +257,33 @@ public class PesanKamarActivity extends AppCompatActivity {
         return countMonth * basePrice;
     }
 
+    public String formatDate(String date) {
+        return null;
+    }
+
     public String countCheckoutDate(int countMonth, String choosenDate) {
         //get String Month
         int length = choosenDate.length();
-        String day;
-        int month = 0;
-        int year = Integer.parseInt(choosenDate.substring(length-4));
+        String day = choosenDate.substring(0, 2);
+        int month = Integer.parseInt(choosenDate.substring(3, 5));
+        int year = Integer.parseInt(choosenDate.substring(length - 4));
 
-        if(length == 10){
-            month = getMonthFormatInteger(choosenDate.substring(2,5));
-            day = choosenDate.substring(0,1);
+        if ((month + countMonth) > 12) {
+            year = year + ((month + countMonth) / 12);
+            month = month + (countMonth % 12);
         } else {
-            month = getMonthFormatInteger(choosenDate.substring(3,6));
-            day = choosenDate.substring(0,2);
+            month = month + countMonth;
         }
 
-        if((month + countMonth) >= 12){
-            year = year + ((month + countMonth)/12);
+
+        String monthS = null;
+        if (month < 10) {
+            monthS = "0" + String.valueOf(month);
         }
 
-        checkout_date = day + "-" + (month+countMonth)%12 + "-" + year;
-        Log.d("testing", "countCheckoutDate: " + checkout_date);
+        checkout_date = day + "-" + monthS + "-" + year;
 
-        return day + " " + getMonthFormatString((month+countMonth)%12) + " " + year;
+        return day + " " + getMonthFormatString(month) + " " + year;
     }
 
     private boolean nameValidation(String data, TextView tv_error) {
@@ -325,33 +338,9 @@ public class PesanKamarActivity extends AppCompatActivity {
         return "JAN";
     }
 
-    private int getMonthFormatInteger(String month) {
-        if (Objects.equals(month, "JAN"))
-            return 1;
-        if (Objects.equals(month, "FEB"))
-            return 2;
-        if (Objects.equals(month, "MAR"))
-            return 3;
-        if (Objects.equals(month, "APR"))
-            return 4;
-        if (Objects.equals(month, "MAY"))
-            return 5;
-        if (Objects.equals(month, "JUN"))
-            return 6;
-        if (Objects.equals(month, "JUL"))
-            return 7;
-        if (Objects.equals(month, "AUG"))
-            return 8;
-        if (Objects.equals(month, "SEP"))
-            return 9;
-        if (Objects.equals(month, "OCT"))
-            return 10;
-        if (Objects.equals(month, "NOV"))
-            return 11;
-        if (Objects.equals(month, "DEC"))
-            return 12;
-
-        //default should never happen
-        return 1;
+    //method ubah 01-01-2020 ke 01 JAN 2020
+    private String dateStringDisplayFormat(String date) {
+        int month = Integer.parseInt(date.substring(3, 5));
+        return date.substring(0, 2) + " " + getMonthFormatString(month) + " " + date.substring(6, 10);
     }
 }
