@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -16,15 +17,21 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kostku.model.Transaction;
 import com.example.kostku.model.User;
 import com.example.kostku.model.UserSession;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PesanKamarActivity extends AppCompatActivity {
 
@@ -34,7 +41,7 @@ public class PesanKamarActivity extends AppCompatActivity {
     EditText countMonth, namaEdt, notelpEdt;
     LinearLayout pesanKamar;
     ScrollView scrollView;
-    private String checkout_date, checkin_date, roomOption;
+    private String checkout_date, checkin_date, roomOption, roomId;
     private DatabaseReference mDatabase;
     boolean isValidNama, isValidNotelp, isValidBulan, isValidRadio = false;
     private long totalPrice, basePrice;
@@ -56,6 +63,7 @@ public class PesanKamarActivity extends AppCompatActivity {
         lantai.setText(choosenFloor);
         String choosenRoom = getIntent().getStringExtra("kamar");
         kamar.setText(choosenRoom);
+        roomId = getIntent().getStringExtra("kamar_id");
 
         editTextCheck();
 
@@ -74,8 +82,27 @@ public class PesanKamarActivity extends AppCompatActivity {
                     User newUser = new User(username, password, namaEdt.getText().toString());
                     mDatabase = FirebaseDatabase.getInstance("https://kostku-89690-default-rtdb.firebaseio.com/").getReference().child("user");
                     DatabaseReference newPostRef = mDatabase.push();
-
                     newPostRef.setValue(newUser);
+
+                    //update kost available
+                    mDatabase = FirebaseDatabase.getInstance("https://kostku-89690-default-rtdb.firebaseio.com/").getReference().child("room").child(roomId);
+                    mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Map<String, Object> kostUpdate = new HashMap<>();
+                            kostUpdate.put("isbooked", true);
+                            kostUpdate.put("checkout_date", checkout_date);
+                            mDatabase.updateChildren(kostUpdate);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                    // add new transaction
+
 
                     Transaction transaction = new Transaction(namaEdt.getText().toString(), notelpEdt.getText().toString(), choosenFloor, choosenRoom,
                             roomOption, String.valueOf(basePrice), String.valueOf(totalPrice), userSession.getIdKost(), checkin_date, checkout_date);

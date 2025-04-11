@@ -46,7 +46,7 @@ public class KamarFragment extends Fragment {
     private Button dateButton;
     private Button pesanKamarButton;
     private String choosenDate; //01-01-2020
-    private String choosenRoom;
+    private String choosenRoom, choosenRoomId;
 
     public KamarFragment() {
         // Required empty public constructor
@@ -110,6 +110,11 @@ public class KamarFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String spinnerValue = adapterView.getItemAtPosition(i).toString();
                 choosenRoom = spinnerValue;
+                for (Room room : rooms) {
+                    if (room.getKost_id().equals(UserSession.getInstance().getIdKost()) && room.getName().equals(spinnerValue)) {
+                        choosenRoomId = room.getId();
+                    }
+                }
                 Toast.makeText(getActivity(), "Selected item" + spinnerValue, Toast.LENGTH_SHORT).show();
                 Log.d("floor", "onViewCreated: room selected : " + spinnerKamar.getSelectedItem().toString());
             }
@@ -139,6 +144,7 @@ public class KamarFragment extends Fragment {
                 intent.putExtra("tanggal_masuk", choosenDate);
                 intent.putExtra("lantai", choosenFloor);
                 intent.putExtra("kamar", choosenRoom);
+                intent.putExtra("kamar_id", choosenRoomId);
                 startActivity(intent);
             }
         });
