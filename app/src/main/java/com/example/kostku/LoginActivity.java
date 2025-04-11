@@ -56,15 +56,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 boolean isPassed = validateLoginField(username.getText().toString(), password.getText().toString(), loginError);
                 if (isPassed) {
+                    Intent intent;
                     if (userSession.getRole() == 0) {
-                        Intent intent = new Intent(LoginActivity.this, ChooseKostActivity.class);
-                        startActivity(intent);
-                        finish();
+                        intent = new Intent(LoginActivity.this, ChooseKostActivity.class);
                     } else {
-                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                        startActivity(intent);
-                        finish();
+                        intent = new Intent(LoginActivity.this, HomeActivity.class);
                     }
+                    startActivity(intent);
+                    finish();
                     Log.d("fdatabase", "onDataChange: " + userSession.getUsername());
                     Log.d("fdatabase", "onDataChange: " + userSession.getRole());
                 }
