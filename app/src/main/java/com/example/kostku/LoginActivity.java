@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     startActivity(intent);
                     finish();
-                    Log.d("fdatabase", "onDataChange: " + userSession.getUsername());
+                    Log.d("fdatabase", "onDataChange: username session: " + userSession.getUsername());
                     Log.d("fdatabase", "onDataChange: " + userSession.getRole());
                 }
 

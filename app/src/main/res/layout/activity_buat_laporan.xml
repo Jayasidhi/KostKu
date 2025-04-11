@@ -197,6 +197,15 @@
                 android:paddingStart="10dp"
                 android:background="@drawable/rounded_edittext"/>
 
+            <TextView
+                android:id="@+id/keluhanErrorLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Keluhan error"
+                android:visibility="gone"
+                android:textColor="@color/design_default_color_error"
+                android:layout_below="@id/keluhanEdt"/>
+
         </RelativeLayout>
 
         <Button
