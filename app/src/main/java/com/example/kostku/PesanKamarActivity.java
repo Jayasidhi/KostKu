@@ -27,17 +27,14 @@ public class PesanKamarActivity extends AppCompatActivity {
 
     RadioGroup radioGroup;
     RadioButton radio1, radio2, radio3;
-    TextView tanggalMasuk, lantai, kamar;
-    TextView totalPriceTxt, totalPriceTxt1, tv_checkout_date;
-    String checkout_date;
-    TextView tv_error_nama, tv_error_notelp, tv_error_bulan, tv_error_radio;
+    TextView tanggalMasuk, lantai, kamar, totalPriceTxt, totalPriceTxt1, tv_checkout_date, tv_error_nama, tv_error_notelp, tv_error_bulan, tv_error_radio, header;
     EditText countMonth, namaEdt, notelpEdt;
+    LinearLayout pesanKamar;
+    ScrollView scrollView;
+    private String checkout_date, checkin_date, roomOption;
     boolean isValidNama, isValidNotelp, isValidBulan, isValidRadio = false;
-    long basePrice = 3000000;
+    private long totalPrice, basePrice;
     private DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-    private ScrollView scrollView;
-    private String roomOption;
-    private long totalPrice;
     private UserSession userSession = UserSession.getInstance();
 
 
@@ -45,106 +42,19 @@ public class PesanKamarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pesan_kamar);
+        findLayout();
+        basePrice = 3000000;
 
-        TextView header = findViewById(R.id.textHeader);
         header.setText("Pesan Kamar");
-
-        String choosenDate = getIntent().getStringExtra("tanggal_masuk");
+        checkin_date = getIntent().getStringExtra("tanggal_masuk");
+        tanggalMasuk.setText(dateStringDisplayFormat(checkin_date));
         String choosenFloor = getIntent().getStringExtra("lantai");
-        String choosenRoom = getIntent().getStringExtra("kamar");
-
-        tanggalMasuk = findViewById(R.id.tanggalMasukInp);
-        tanggalMasuk.setText(dateStringDisplayFormat(choosenDate));
-
-        lantai = findViewById(R.id.lantaiInp);
         lantai.setText(choosenFloor);
-        kamar = findViewById(R.id.nokamarInp);
+        String choosenRoom = getIntent().getStringExtra("kamar");
         kamar.setText(choosenRoom);
-
-
-        namaEdt = findViewById(R.id.namaEdt);
-        notelpEdt = findViewById(R.id.notelpEdt);
-        tv_error_nama = findViewById(R.id.namaErrorLabel);
-        tv_error_notelp = findViewById(R.id.notelpErrorLabel);
-        tv_error_bulan = findViewById(R.id.bulanErrorLabel);
-        tv_error_radio = findViewById(R.id.tataLetakErrorLabel);
-        scrollView = findViewById(R.id.scrollView);
-        tv_checkout_date = findViewById(R.id.tanggalKeluarLabel);
 
         editTextCheck();
 
-        countMonth = findViewById(R.id.jumlahBulanEdt);
-        totalPriceTxt = findViewById(R.id.totalHargaNum);
-        totalPriceTxt1 = findViewById(R.id.totalHargaLabel);
-
-        countMonth.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (countMonth.getText().toString().isEmpty() || (countMonth.getText().toString().startsWith("0") && countMonth.getText().toString().length() >= 1)) {
-                    countMonth.setText("1");
-                }
-                isValidBulan = true;
-                tv_error_bulan.setVisibility(View.GONE);
-                totalPrice = countTotalPrice(Integer.parseInt(countMonth.getText().toString()), basePrice);
-                totalPriceTxt.setText("Rp " + decimalFormat.format(totalPrice));
-                totalPriceTxt1.setText(decimalFormat.format(totalPrice));
-                tv_checkout_date.setText(countCheckoutDate(Integer.parseInt(countMonth.getText().toString()), choosenDate));
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (countMonth.getText().toString().isEmpty()) {
-                    tv_error_bulan.setText("Harap Masukkan Jumlah Bulan yang Diinginkan!");
-                    tv_error_bulan.setVisibility(View.VISIBLE);
-                    isValidBulan = false;
-                } else {
-                    isValidBulan = true;
-                    tv_error_bulan.setVisibility(View.GONE);
-                }
-
-            }
-        });
-
-        radioGroup = findViewById(R.id.tataLetakRadioGrp);
-        radio1 = findViewById(R.id.option1);
-        radio2 = findViewById(R.id.option2);
-        radio3 = findViewById(R.id.option3);
-
-//        if(radioGroup.getCheckedRadioButtonId() == -1){
-//            tv_error_radio.setText("Silahkan Pilih Opsi Tata Ltak!");
-//            tv_error_radio.setVisibility(View.VISIBLE);
-//            isValidRadio = false;
-//        } else {
-//            tv_error_radio.setVisibility(View.GONE);
-//            isValidRadio = true;
-//        }
-
-
-        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            if (checkedId == R.id.option1) {
-                Toast.makeText(this, "Option 1 Selected", Toast.LENGTH_SHORT).show();
-                isValidRadio = true;
-            } else if (checkedId == R.id.option2) {
-                Toast.makeText(this, "Option 2 Selected", Toast.LENGTH_SHORT).show();
-                isValidRadio = true;
-            } else if (checkedId == R.id.option3) {
-                Toast.makeText(this, "Option 3 Selected", Toast.LENGTH_SHORT).show();
-                isValidRadio = true;
-            } else {
-                tv_error_radio.setText("Silahkan Pilih Opsi Tata Letak!");
-                tv_error_radio.setVisibility(View.VISIBLE);
-                isValidRadio = false;
-            }
-            roomOption = String.valueOf(checkedId);
-        });
-
-        LinearLayout pesanKamar = findViewById(R.id.pembayaran_layout);
         pesanKamar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,14 +63,19 @@ public class PesanKamarActivity extends AppCompatActivity {
 
                     // buat user, update db kamar, masukin db transaksi
 
+                    String username = notelpEdt.getText().toString();
+                    int x = ((int) (Math.random() * 100000)) % 1000;
+//                    String password = namaEdt.getText().toString() + String.valueOf(x);
+                    String password = namaEdt.getText().toString() + username.substring(notelpEdt.length() - 3);
+
                     Transaction transaction = new Transaction(namaEdt.getText().toString(), notelpEdt.getText().toString(), choosenFloor, choosenRoom,
-                            roomOption, String.valueOf(basePrice), String.valueOf(totalPrice), userSession.getIdKost(), choosenDate, checkout_date);
+                            roomOption, String.valueOf(basePrice), String.valueOf(totalPrice), userSession.getIdKost(), checkin_date, checkout_date);
 
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(PesanKamarActivity.this);
 
                     builder.setTitle("Pesanan Anda Berhasil !");
-                    builder.setMessage("username : " + "username" + "\n" + "password : " + "password");
+                    builder.setMessage("username : " + username + "\n" + "password : " + password);
 
                     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
@@ -201,6 +116,33 @@ public class PesanKamarActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void findLayout() {
+        pesanKamar = findViewById(R.id.pembayaran_layout);
+        header = findViewById(R.id.textHeader);
+        tanggalMasuk = findViewById(R.id.tanggalMasukInp);
+        lantai = findViewById(R.id.lantaiInp);
+        kamar = findViewById(R.id.nokamarInp);
+
+
+        namaEdt = findViewById(R.id.namaEdt);
+        notelpEdt = findViewById(R.id.notelpEdt);
+        tv_error_nama = findViewById(R.id.namaErrorLabel);
+        tv_error_notelp = findViewById(R.id.notelpErrorLabel);
+        tv_error_bulan = findViewById(R.id.bulanErrorLabel);
+        tv_error_radio = findViewById(R.id.tataLetakErrorLabel);
+        scrollView = findViewById(R.id.scrollView);
+        tv_checkout_date = findViewById(R.id.tanggalKeluarLabel);
+
+        countMonth = findViewById(R.id.jumlahBulanEdt);
+        totalPriceTxt = findViewById(R.id.totalHargaNum);
+        totalPriceTxt1 = findViewById(R.id.totalHargaLabel);
+
+        radioGroup = findViewById(R.id.tataLetakRadioGrp);
+        radio1 = findViewById(R.id.option1);
+        radio2 = findViewById(R.id.option2);
+        radio3 = findViewById(R.id.option3);
     }
 
     private void editTextCheck() {
@@ -250,6 +192,57 @@ public class PesanKamarActivity extends AppCompatActivity {
             }
         });
 
+        countMonth.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (countMonth.getText().toString().isEmpty() || (countMonth.getText().toString().startsWith("0") && countMonth.getText().toString().length() >= 1)) {
+                    countMonth.setText("1");
+                }
+                isValidBulan = true;
+                tv_error_bulan.setVisibility(View.GONE);
+                totalPrice = countTotalPrice(Integer.parseInt(countMonth.getText().toString()), basePrice);
+                totalPriceTxt.setText("Rp " + decimalFormat.format(totalPrice));
+                totalPriceTxt1.setText(decimalFormat.format(totalPrice));
+                tv_checkout_date.setText(countCheckoutDate(Integer.parseInt(countMonth.getText().toString()), checkin_date));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (countMonth.getText().toString().isEmpty()) {
+                    tv_error_bulan.setText("Harap Masukkan Jumlah Bulan yang Diinginkan!");
+                    tv_error_bulan.setVisibility(View.VISIBLE);
+                    isValidBulan = false;
+                } else {
+                    isValidBulan = true;
+                    tv_error_bulan.setVisibility(View.GONE);
+                }
+
+            }
+        });
+
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.option1) {
+                Toast.makeText(this, "Option 1 Selected", Toast.LENGTH_SHORT).show();
+                isValidRadio = true;
+            } else if (checkedId == R.id.option2) {
+                Toast.makeText(this, "Option 2 Selected", Toast.LENGTH_SHORT).show();
+                isValidRadio = true;
+            } else if (checkedId == R.id.option3) {
+                Toast.makeText(this, "Option 3 Selected", Toast.LENGTH_SHORT).show();
+                isValidRadio = true;
+            } else {
+                tv_error_radio.setText("Silahkan Pilih Opsi Tata Letak!");
+                tv_error_radio.setVisibility(View.VISIBLE);
+                isValidRadio = false;
+            }
+            roomOption = String.valueOf(checkedId);
+        });
     }
 
 
