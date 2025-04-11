@@ -19,7 +19,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kostku.model.Transaction;
+import com.example.kostku.model.User;
 import com.example.kostku.model.UserSession;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DecimalFormat;
 
@@ -32,6 +35,7 @@ public class PesanKamarActivity extends AppCompatActivity {
     LinearLayout pesanKamar;
     ScrollView scrollView;
     private String checkout_date, checkin_date, roomOption;
+    private DatabaseReference mDatabase;
     boolean isValidNama, isValidNotelp, isValidBulan, isValidRadio = false;
     private long totalPrice, basePrice;
     private DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
@@ -63,10 +67,15 @@ public class PesanKamarActivity extends AppCompatActivity {
 
                     // buat user, update db kamar, masukin db transaksi
 
+                    // generate new user
                     String username = notelpEdt.getText().toString();
-                    int x = ((int) (Math.random() * 100000)) % 1000;
-//                    String password = namaEdt.getText().toString() + String.valueOf(x);
-                    String password = namaEdt.getText().toString() + username.substring(notelpEdt.length() - 3);
+                    String name[] = namaEdt.getText().toString().split(" ");
+                    String password = name[0] + username.substring(notelpEdt.length() - 3);
+                    User newUser = new User(username, password, namaEdt.getText().toString());
+                    mDatabase = FirebaseDatabase.getInstance("https://kostku-89690-default-rtdb.firebaseio.com/").getReference().child("user");
+                    DatabaseReference newPostRef = mDatabase.push();
+
+                    newPostRef.setValue(newUser);
 
                     Transaction transaction = new Transaction(namaEdt.getText().toString(), notelpEdt.getText().toString(), choosenFloor, choosenRoom,
                             roomOption, String.valueOf(basePrice), String.valueOf(totalPrice), userSession.getIdKost(), checkin_date, checkout_date);

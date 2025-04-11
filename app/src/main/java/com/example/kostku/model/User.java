@@ -4,7 +4,7 @@ import com.google.firebase.database.DataSnapshot;
 
 public class User {
 
-    private String id, username, password;
+    private String id, username, password, fullname;
     private int role;
 
     public User(DataSnapshot userSnapshot) {
@@ -12,6 +12,14 @@ public class User {
         this.username = userSnapshot.child("username").getValue().toString();
         this.password = userSnapshot.child("password").getValue().toString();
         this.role = Integer.parseInt(userSnapshot.child("role").getValue().toString());
+        this.fullname = userSnapshot.child("fullname").getValue().toString();
+    }
+
+    public User(String username, String password, String fullname) {
+        this.username = username;
+        this.password = password;
+        this.fullname = fullname;
+        this.role = 1;
     }
 
     public String getId() {
@@ -44,5 +52,13 @@ public class User {
 
     public void setRole(int role) {
         this.role = role;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 }

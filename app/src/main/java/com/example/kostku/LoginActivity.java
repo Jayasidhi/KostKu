@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.kostku.model.Transaction;
 import com.example.kostku.model.User;
 import com.example.kostku.model.UserSession;
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private boolean isErrorField = false;
     private DatabaseReference mDatabase;
     private ArrayList<User> users = new ArrayList<>();
+    private ArrayList<Transaction> transactions = new ArrayList<>();
     private UserSession userSession = UserSession.getInstance();
 
     private boolean validateFieldLength(String string) {
@@ -54,11 +56,17 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 boolean isPassed = validateLoginField(username.getText().toString(), password.getText().toString(), loginError);
                 if (isPassed) {
+                    if (userSession.getRole() == 0) {
+                        Intent intent = new Intent(LoginActivity.this, ChooseKostActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                     Log.d("fdatabase", "onDataChange: " + userSession.getUsername());
                     Log.d("fdatabase", "onDataChange: " + userSession.getRole());
-                    Intent intent = new Intent(LoginActivity.this, ChooseKostActivity.class);
-                    startActivity(intent);
-                    finish();
                 }
 
 
@@ -79,7 +87,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private void fetchDataFromFirebase() {
         mDatabase = FirebaseDatabase.getInstance("https://kostku-89690-default-rtdb.firebaseio.com/").getReference().child("user");
-
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NotNull DataSnapshot snapshot) {
@@ -97,6 +104,23 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
         mDatabase.addValueEventListener(postListener);
+
+        mDatabase = FirebaseDatabase.getInstance("https://kostku-89690-default-rtdb.firebaseio.com/").getReference().child("transaction");
+        ValueEventListener postTransactionListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NotNull DataSnapshot snapshot) {
+                for (DataSnapshot transactionSnapshot : snapshot.getChildren()) {
+                    Transaction transaction = new Transaction(transactionSnapshot);
+                    transactions.add(transaction);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NotNull DatabaseError error) {
+                Log.d("fdatabase", "onDataChange: " + error.getMessage());
+            }
+        };
+        mDatabase.addValueEventListener(postTransactionListener);
     }
 
     private boolean validateLoginField(String username, String password, TextView textView) {
@@ -115,6 +139,12 @@ public class LoginActivity extends AppCompatActivity {
                 if (user.getPassword().equals(password)) {
                     userSession.setUsername(user.getUsername());
                     userSession.setRole(user.getRole());
+                    for (Transaction transaction : transactions) {
+                        if (transaction.getPhoneNumber().equals(user.getUsername())) {
+                            userSession.setIdKost(transaction.getKostId());
+                            break;
+                        }
+                    }
                     return true;
                 } else {
                     displayLoginErrorText(textView, "Password false", true);
