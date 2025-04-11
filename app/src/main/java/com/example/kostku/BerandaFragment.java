@@ -22,7 +22,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 
 /**
@@ -149,15 +148,15 @@ public class BerandaFragment extends Fragment {
                     transactions.add(transaction);
                     Log.d("Tdatabase", "onDataChange: Transaction ID: " + transaction.getId());
                     Log.d("Tdatabase", "onDataChange: " + transaction.getName());
-                    Log.d("Tdatabase", "onDataChange: " + transaction.getPhoneNumber());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getPhone_number());
                     Log.d("Tdatabase", "onDataChange: " + transaction.getCheckin_date());
                     Log.d("Tdatabase", "onDataChange: " + transaction.getCheckout_date());
-                    Log.d("Tdatabase", "onDataChange: " + transaction.getRoomFloor());
-                    Log.d("Tdatabase", "onDataChange: " + transaction.getRoomNumber());
-                    Log.d("Tdatabase", "onDataChange: " + transaction.getRoomOption());
-                    Log.d("Tdatabase", "onDataChange: " + transaction.getBasePrice());
-                    Log.d("Tdatabase", "onDataChange: " + transaction.getTotalPrice());
-                    Log.d("Tdatabase", "onDataChange: " + transaction.getKostId());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getRoom_floor());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getRoom_number());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getRoom_option());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getBase_price());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getTotal_price());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getKost_id());
                 }
             }
 

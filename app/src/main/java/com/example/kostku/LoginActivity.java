@@ -138,8 +138,8 @@ public class LoginActivity extends AppCompatActivity {
                     userSession.setUsername(user.getUsername());
                     userSession.setRole(user.getRole());
                     for (Transaction transaction : transactions) {
-                        if (transaction.getPhoneNumber().equals(user.getUsername())) {
-                            userSession.setIdKost(transaction.getKostId());
+                        if (transaction.getPhone_number().equals(user.getUsername())) {
+                            userSession.setIdKost(transaction.getKost_id());
                             break;
                         }
                     }

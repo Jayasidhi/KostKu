@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -72,9 +71,6 @@ public class PesanKamarActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (isValidNama && isValidNotelp && isValidBulan && isValidRadio) {
-
-                    // buat user, update db kamar, masukin db transaksi
-
                     // generate new user
                     String username = notelpEdt.getText().toString();
                     String name[] = namaEdt.getText().toString().split(" ");
@@ -102,10 +98,11 @@ public class PesanKamarActivity extends AppCompatActivity {
                     });
 
                     // add new transaction
-
-
                     Transaction transaction = new Transaction(namaEdt.getText().toString(), notelpEdt.getText().toString(), choosenFloor, choosenRoom,
                             roomOption, String.valueOf(basePrice), String.valueOf(totalPrice), userSession.getIdKost(), checkin_date, checkout_date);
+                    mDatabase = FirebaseDatabase.getInstance("https://kostku-89690-default-rtdb.firebaseio.com/").getReference().child("transaction");
+                    newPostRef = mDatabase.push();
+                    newPostRef.setValue(transaction);
 
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(PesanKamarActivity.this);
@@ -266,18 +263,20 @@ public class PesanKamarActivity extends AppCompatActivity {
             if (checkedId == R.id.option1) {
                 Toast.makeText(this, "Option 1 Selected", Toast.LENGTH_SHORT).show();
                 isValidRadio = true;
+                roomOption = "1";
             } else if (checkedId == R.id.option2) {
                 Toast.makeText(this, "Option 2 Selected", Toast.LENGTH_SHORT).show();
                 isValidRadio = true;
+                roomOption = "2";
             } else if (checkedId == R.id.option3) {
                 Toast.makeText(this, "Option 3 Selected", Toast.LENGTH_SHORT).show();
                 isValidRadio = true;
+                roomOption = "3";
             } else {
                 tv_error_radio.setText("Silahkan Pilih Opsi Tata Letak!");
                 tv_error_radio.setVisibility(View.VISIBLE);
                 isValidRadio = false;
             }
-            roomOption = String.valueOf(checkedId);
         });
     }
 
