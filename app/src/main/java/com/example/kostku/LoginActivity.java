@@ -25,7 +25,6 @@ import java.util.ArrayList;
 public class LoginActivity extends AppCompatActivity {
 
     private boolean isErrorField = false;
-    private DatabaseReference mDatabase;
     private ArrayList<User> users = new ArrayList<>();
     private ArrayList<Transaction> transactions = new ArrayList<>();
     private UserSession userSession = UserSession.getInstance();
@@ -85,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void fetchDataFromFirebase() {
-        mDatabase = FirebaseDatabase.getInstance("https://kostku-89690-default-rtdb.firebaseio.com/").getReference().child("user");
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance("https://kostku-89690-default-rtdb.firebaseio.com/").getReference().child("user");
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NotNull DataSnapshot snapshot) {
@@ -124,12 +123,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean validateLoginField(String username, String password, TextView textView) {
         if (validateFieldLength(username)) {
-            displayLoginErrorText(textView, "Username must be filled", true);
+            displayLoginErrorText(textView, "Username must be filled");
             return false;
         }
 
         if (validateFieldLength(password)) {
-            displayLoginErrorText(textView, "Password must be filled", true);
+            displayLoginErrorText(textView, "Password must be filled");
             return false;
         }
 
@@ -146,17 +145,17 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     return true;
                 } else {
-                    displayLoginErrorText(textView, "Password false", true);
+                    displayLoginErrorText(textView, "Password false");
                     return false;
                 }
             }
         }
-        displayLoginErrorText(textView, "User does not Exist", true);
+        displayLoginErrorText(textView, "User does not Exist");
         return false;
     }
 
-    private void displayLoginErrorText(TextView textView, String errorMessage, boolean isVisible) {
-        textView.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+    private void displayLoginErrorText(TextView textView, String errorMessage) {
+        textView.setVisibility(View.VISIBLE);
         textView.setText(errorMessage);
     }
 
