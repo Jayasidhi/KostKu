@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@color/SecondaryColor">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/roomNumber"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="A01"-->
+<!--            android:textSize="18dp"-->
+<!--            android:gravity="left"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/expiredDate"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="01-01-2025"-->
+<!--            android:textSize="18dp"-->
+<!--            android:gravity="right" />-->
+
+<!--        <View-->
+<!--            android:id="@+id/line2"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="1dp"-->
+<!--            android:background="@android:color/black"-->
+<!--            android:layout_below="@id/roomNumber"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:layout_marginBottom="8dp"/>-->
+
+<!--    </RelativeLayout>-->
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/SecondaryColor">
+
+        <TextView
+            android:id="@+id/nama_penghuni_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama : "
+            android:textSize="18dp"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/tv_nama_penghuni"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="XXXXX"
+            android:textSize="18dp"
+            android:layout_marginBottom="4dp"
+            android:layout_toRightOf="@+id/nama_penghuni_txt"/>
+
+        <TextView
+            android:id="@+id/notelp_penghuni_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nomor Telepon : "
+            android:textSize="18dp"
+            android:layout_marginBottom="4dp"
+            android:layout_below="@id/nama_penghuni_txt"/>
+
+        <TextView
+            android:id="@+id/tv_notelp_penghuni"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="XXXXX"
+            android:textSize="18dp"
+            android:layout_marginBottom="4dp"
+            android:layout_below="@+id/tv_nama_penghuni"
+            android:layout_toRightOf="@+id/notelp_penghuni_txt"/>
+
+        <TextView
+            android:id="@+id/kamar_penghuni_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nomor Kamar : "
+            android:textSize="18dp"
+            android:layout_marginBottom="4dp"
+            android:layout_below="@id/notelp_penghuni_txt"/>
+
+        <TextView
+            android:id="@+id/tv_kamar_penghuni"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="XXXXX"
+            android:textSize="18dp"
+            android:layout_marginBottom="4dp"
+            android:layout_below="@+id/tv_notelp_penghuni"
+            android:layout_toRightOf="@+id/kamar_penghuni_txt"/>
+
+        <TextView
+            android:id="@+id/checkout_penghuni_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tanggal Keluar : "
+            android:textSize="18dp"
+            android:layout_marginBottom="4dp"
+            android:layout_below="@id/kamar_penghuni_txt"/>
+
+        <TextView
+            android:id="@+id/tv_checkout_penghuni"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="XXXXX"
+            android:textSize="18dp"
+            android:layout_marginBottom="4dp"
+            android:layout_below="@+id/tv_kamar_penghuni"
+            android:layout_toRightOf="@+id/checkout_penghuni_txt"/>
+
+        <View
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/black"
+            android:layout_below="@id/checkout_penghuni_txt"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"/>
+
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>

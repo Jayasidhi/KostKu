@@ -4,7 +4,7 @@ public class UserSession {
 
     private static UserSession userSession;
     private String username;
-    private int role;
+    private int role = -1;
 
     private String idKost;
 

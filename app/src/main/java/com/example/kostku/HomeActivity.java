@@ -25,6 +25,7 @@ import java.util.ArrayList;
 public class HomeActivity extends AppCompatActivity {
 
     ActivityHomeBinding binding;
+    private UserSession userSession = UserSession.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +34,24 @@ public class HomeActivity extends AppCompatActivity {
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        replaceFragment(new BerandaFragment());
+        if(userSession.getRole() == 0){
+            replaceFragment(new BerandaAdminFragment());
+        } else {
+            replaceFragment(new BerandaFragment());
+        }
+
         binding.bottomNavigationView.setSelectedItemId(R.id.beranda);
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
             switch (item.getItemId()) {
                 case R.id.beranda:
-                    replaceFragment(new BerandaFragment());
+                    Log.d("role", "onCreate: " + userSession.getRole());
+                    if(userSession.getRole() == 0){
+                        replaceFragment(new BerandaAdminFragment());
+                    } else {
+                        replaceFragment(new BerandaFragment());
+                    }
                     break;
                 case R.id.kamar:
                     replaceFragment(new KamarFragment());
