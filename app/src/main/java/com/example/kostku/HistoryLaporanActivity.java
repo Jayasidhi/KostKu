@@ -50,7 +50,7 @@ public class HistoryLaporanActivity extends AppCompatActivity {
         recyclerView.setAdapter(laporanAdapter);
 
         TextView header = findViewById(R.id.textHeader);
-        header.setText("History Laporan");
+        header.setText("Riwayat Laporan");
     }
 
     private void fetchDataFromFirebase() {
