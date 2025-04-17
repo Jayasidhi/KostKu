@@ -40,7 +40,7 @@ public class ExpiredKostAdapter extends RecyclerView.Adapter<ExpiredKostAdapter.
 
     @Override
     public int getItemCount() {
-        return 0;
+        return transactionList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

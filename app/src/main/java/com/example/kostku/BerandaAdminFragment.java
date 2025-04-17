@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +40,7 @@ public class BerandaAdminFragment extends Fragment {
 
     private DatabaseReference mDatabase;
     private ArrayList<Transaction> transactions = new ArrayList<>();
+    private ArrayList<Transaction> expiredKost = new ArrayList<>();
     private ArrayList<Room> rooms = new ArrayList<>();
     private ExpiredKostAdapter expiredKostAdapter;
 
@@ -46,6 +49,8 @@ public class BerandaAdminFragment extends Fragment {
     private long penghasilanTotal = 0;
     private long penghasilanBulan = 0;
     private DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
+    private int thisMonth, thisYear;
+    private String currentKost;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -81,12 +86,23 @@ public class BerandaAdminFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Date nowDate = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(nowDate);
+        thisMonth = cal.get(Calendar.MONTH) + 1;
+        thisYear = cal.get(Calendar.YEAR);
+
+        currentKost = UserSession.getInstance().getIdKost();
+
         fetchDataFromFirebase();
         fetchDataTransactionFromFirebase();
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -99,6 +115,11 @@ public class BerandaAdminFragment extends Fragment {
         tv_penghasilan_total = view.findViewById(R.id.penghasilan_total_inp);
         tv_penghasilan_total.setText(String.valueOf(penghasilanTotal));
 
+        RecyclerView recyclerView = view.findViewById(R.id.rv_expired_kost);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        expiredKostAdapter = new ExpiredKostAdapter(expiredKost);
+        recyclerView.setAdapter(expiredKostAdapter);
+
     }
 
     @Override
@@ -108,16 +129,26 @@ public class BerandaAdminFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_beranda_admin, container, false);
     }
 
+    public void expiredKost(){
+        for(Transaction transaction : transactions){
+            int checkoutMonth = Integer.parseInt(transaction.getCheckout_date().substring(3,5));
+            if((transaction.getKost_id().equals(currentKost)) && checkoutMonth == thisMonth){
+                expiredKost.add(transaction);
+                Log.d("expired", "expiredKost: " + expiredKost);
+            }
+        }
+    }
+
 
     public void countPenghasilan(){
         penghasilanTotal = 0;
         penghasilanBulan = 0;
-        String currentKost = UserSession.getInstance().getIdKost();
-        Date nowDate = new Date();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(nowDate);
-        int thisMonth = cal.get(Calendar.MONTH) + 1;
-        int thisYear = cal.get(Calendar.YEAR);
+//        String currentKost = UserSession.getInstance().getIdKost();
+//        Date nowDate = new Date();
+//        Calendar cal = Calendar.getInstance();
+//        cal.setTime(nowDate);
+//        int thisMonth = cal.get(Calendar.MONTH) + 1;
+//        int thisYear = cal.get(Calendar.YEAR);
 
         for(Transaction transaction : transactions) {
             int checkinMonth = Integer.parseInt(transaction.getCheckin_date().substring(3,5));
@@ -137,7 +168,7 @@ public class BerandaAdminFragment extends Fragment {
 
     public void countPersediaanKamar() {
         persediaan = 0;
-        String currentKost = UserSession.getInstance().getIdKost();
+//        String currentKost = UserSession.getInstance().getIdKost();
         for (Room room : rooms) {
 //            Log.d("d", "countPersediaanKamar: " + room.getKost_id() + " " + currentKost);
             if (room.getKost_id().equals(currentKost) && !room.getIsbooked()) {
@@ -200,6 +231,7 @@ public class BerandaAdminFragment extends Fragment {
                     Log.d("Tdatabase", "onDataChange: " + transaction.getKost_id());
                 }
                 countPenghasilan();
+                expiredKost();
             }
 
             @Override
