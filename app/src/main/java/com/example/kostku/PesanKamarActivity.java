@@ -29,6 +29,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,8 +42,8 @@ public class PesanKamarActivity extends AppCompatActivity {
     EditText countMonth, namaEdt, notelpEdt;
     LinearLayout pesanKamar;
     ScrollView scrollView;
-    private String checkout_date, checkin_date, roomOption, roomId;
-    private DatabaseReference mDatabase;
+    private String checkout_date, checkin_date, roomOption, roomId, today;
+    private DatabaseReference mDatabase, updateDatabase;
     boolean isValidNama, isValidNotelp, isValidBulan, isValidRadio = false;
     private long totalPrice, basePrice;
     private DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
@@ -53,6 +55,8 @@ public class PesanKamarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pesan_kamar);
         findLayout();
+        getTodaysDate();
+
         basePrice = 3000000;
 
         header.setText("Pesan Kamar");
@@ -81,14 +85,14 @@ public class PesanKamarActivity extends AppCompatActivity {
                     newPostRef.setValue(newUser);
 
                     //update kost available
-                    mDatabase = FirebaseDatabase.getInstance("https://kostku-89690-default-rtdb.firebaseio.com/").getReference().child("room").child(roomId);
-                    mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                    updateDatabase = FirebaseDatabase.getInstance("https://kostku-89690-default-rtdb.firebaseio.com/").getReference().child("room").child(roomId);
+                    updateDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             Map<String, Object> kostUpdate = new HashMap<>();
                             kostUpdate.put("isbooked", true);
                             kostUpdate.put("checkout_date", checkout_date);
-                            mDatabase.updateChildren(kostUpdate);
+                            updateDatabase.updateChildren(kostUpdate);
                         }
 
                         @Override
@@ -99,7 +103,7 @@ public class PesanKamarActivity extends AppCompatActivity {
 
                     // add new transaction
                     Transaction transaction = new Transaction(namaEdt.getText().toString(), notelpEdt.getText().toString(), choosenFloor, choosenRoom,
-                            roomOption, String.valueOf(basePrice), String.valueOf(totalPrice), userSession.getIdKost(), checkin_date, checkout_date);
+                            roomOption, String.valueOf(basePrice), String.valueOf(totalPrice), userSession.getIdKost(), checkin_date, checkout_date, today);
                     mDatabase = FirebaseDatabase.getInstance("https://kostku-89690-default-rtdb.firebaseio.com/").getReference().child("transaction");
                     newPostRef = mDatabase.push();
                     newPostRef.setValue(transaction);
@@ -114,6 +118,7 @@ public class PesanKamarActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             Toast.makeText(getApplicationContext(), "Thank You !", Toast.LENGTH_SHORT).show();
+
                             Intent intent = new Intent(PesanKamarActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
@@ -285,8 +290,25 @@ public class PesanKamarActivity extends AppCompatActivity {
         return countMonth * basePrice;
     }
 
-    public String formatDate(String date) {
-        return null;
+    private void getTodaysDate() {
+        Date nowDate = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(nowDate);
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        month = month + 1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        today = makeDateString(day, month, year);
+    }
+    private static String makeDateString(int day, int month, int year) {
+        String date = null;
+        date = day < 10 ? "0" + day : day + "";
+        date += "-";
+        date += month < 10 ? "0" + month : month;
+        date += "-";
+        date += year;
+        return date;
     }
 
     public String countCheckoutDate(int countMonth, String choosenDate) {

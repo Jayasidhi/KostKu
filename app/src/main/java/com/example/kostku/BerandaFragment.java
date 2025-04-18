@@ -157,6 +157,7 @@ public class BerandaFragment extends Fragment {
                     Log.d("Tdatabase", "onDataChange: " + transaction.getBase_price());
                     Log.d("Tdatabase", "onDataChange: " + transaction.getTotal_price());
                     Log.d("Tdatabase", "onDataChange: " + transaction.getKost_id());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getTransaction_date());
                 }
             }
 

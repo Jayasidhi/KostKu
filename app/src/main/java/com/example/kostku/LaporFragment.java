@@ -104,8 +104,13 @@ public class LaporFragment extends Fragment {
         RelativeLayout buatLaporan = (RelativeLayout) getView().findViewById(R.id.buat_laporan_layout);
         buatLaporan.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                Intent intent = new Intent(getActivity(), BuatLaporanActivity.class);
-                startActivity(intent);
+                if (UserSession.getInstance().getRole() == -1){
+                    return;
+                }
+                else {
+                    Intent intent = new Intent(getActivity(), BuatLaporanActivity.class);
+                    startActivity(intent);
+                }
             }
 
         });
