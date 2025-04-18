@@ -138,6 +138,12 @@ public class KamarFragment extends Fragment {
         webView.loadUrl("File:///android_asset/panorama.html");
 
         pesanKamarButton = getView().findViewById(R.id.pesan_kamar_btn);
+
+        if(UserSession.getInstance().getRole() == 0){
+            pesanKamarButton.setVisibility(View.GONE);
+        } else if (UserSession.getInstance().getRole() == 1){
+            pesanKamarButton.setText("Perpanjang");
+        }
         pesanKamarButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view1) {
                 Intent intent = new Intent(getActivity(), PesanKamarActivity.class);

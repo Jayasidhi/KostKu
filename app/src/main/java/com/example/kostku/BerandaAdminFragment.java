@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.kostku.model.Laporan;
 import com.example.kostku.model.Room;
 import com.example.kostku.model.Transaction;
 import com.example.kostku.model.UserSession;
@@ -41,7 +40,9 @@ public class BerandaAdminFragment extends Fragment {
     private DatabaseReference mDatabase;
     private ArrayList<Transaction> transactions = new ArrayList<>();
     private ArrayList<Transaction> expiredKost = new ArrayList<>();
+    private ArrayList<Transaction> newCustomer = new ArrayList<>();
     private ArrayList<Room> rooms = new ArrayList<>();
+    private ManagementKostAdapter managementKostAdapter;
     private ExpiredKostAdapter expiredKostAdapter;
 
     TextView jumlahKamar, tv_pengahasilan_bulan, tv_penghasilan_total;
@@ -120,6 +121,11 @@ public class BerandaAdminFragment extends Fragment {
         expiredKostAdapter = new ExpiredKostAdapter(expiredKost);
         recyclerView.setAdapter(expiredKostAdapter);
 
+        RecyclerView recyclerView2 = view.findViewById(R.id.rv_newCustomer_kost);
+        recyclerView2.setLayoutManager(new LinearLayoutManager(getContext()));
+        managementKostAdapter = new ManagementKostAdapter(newCustomer);
+        recyclerView2.setAdapter(managementKostAdapter);
+
     }
 
     @Override
@@ -139,6 +145,16 @@ public class BerandaAdminFragment extends Fragment {
         }
     }
 
+    public void newCustomer(){
+        for(Transaction transaction : transactions){
+            int checkinMonth = Integer.parseInt(transaction.getCheckin_date().substring(3,5));
+            if((transaction.getKost_id().equals(currentKost)) && checkinMonth == thisMonth){
+                newCustomer.add(transaction);
+                Log.d("new", "newCustomer: " + newCustomer);
+            }
+        }
+    }
+
 
     public void countPenghasilan(){
         penghasilanTotal = 0;
@@ -151,14 +167,14 @@ public class BerandaAdminFragment extends Fragment {
 //        int thisYear = cal.get(Calendar.YEAR);
 
         for(Transaction transaction : transactions) {
-            int checkinMonth = Integer.parseInt(transaction.getCheckin_date().substring(3,5));
+            int transactionMonth = Integer.parseInt(transaction.getTransaction_date().substring(3,5));
             int checkinYear = Integer.parseInt(transaction.getCheckin_date().substring(6,10));
             if(transaction.getKost_id().equals(currentKost)){
                 penghasilanTotal = penghasilanTotal + Long.parseLong(transaction.getTotal_price());
             }
-            if((transaction.getKost_id().equals(currentKost)) && (checkinMonth == thisMonth) && (checkinYear == thisYear)){
+            if((transaction.getKost_id().equals(currentKost)) && (transactionMonth == thisMonth) && (checkinYear == thisYear)){
                 penghasilanBulan = penghasilanBulan + Long.parseLong(transaction.getTotal_price());
-                Log.d("penghasilan", "countPenghasilan bulan: " + penghasilanBulan + " " + checkinMonth + thisMonth);
+                Log.d("penghasilan", "countPenghasilan bulan: " + penghasilanBulan + " " + transactionMonth + thisMonth);
             }
         }
         tv_penghasilan_total.setText(decimalFormat.format(penghasilanTotal));
@@ -212,6 +228,7 @@ public class BerandaAdminFragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance("https://kostku-89690-default-rtdb.firebaseio.com/").getReference().child("transaction");
 
         ValueEventListener postListener = new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot transactionSnapshot : snapshot.getChildren()){
@@ -232,6 +249,9 @@ public class BerandaAdminFragment extends Fragment {
                 }
                 countPenghasilan();
                 expiredKost();
+                newCustomer();
+                expiredKostAdapter.notifyDataSetChanged();
+                managementKostAdapter.notifyDataSetChanged();
             }
 
             @Override

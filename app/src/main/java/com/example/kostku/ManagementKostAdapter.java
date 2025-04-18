@@ -12,11 +12,11 @@ import com.example.kostku.model.Transaction;
 
 import java.util.List;
 
-public class ExpiredKostAdapter extends RecyclerView.Adapter<ExpiredKostAdapter.ViewHolder> {
+public class ManagementKostAdapter extends RecyclerView.Adapter<ManagementKostAdapter.ViewHolder> {
 
     private List<Transaction> transactionList;
 
-    public ExpiredKostAdapter(List<Transaction> transactionList){
+    public ManagementKostAdapter(List<Transaction> transactionList){
         this.transactionList = transactionList;
     }
 
@@ -26,11 +26,11 @@ public class ExpiredKostAdapter extends RecyclerView.Adapter<ExpiredKostAdapter.
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.expired_kost_row, parent, false);
 
-        return new ExpiredKostAdapter.ViewHolder(view);
+        return new ManagementKostAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ExpiredKostAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ManagementKostAdapter.ViewHolder holder, int position) {
         holder.fullName.setText(transactionList.get(position).getName());
         holder.phoneNumber.setText(transactionList.get(position).getPhone_number());
         holder.roomNumber.setText(transactionList.get(position).getRoom_number());
