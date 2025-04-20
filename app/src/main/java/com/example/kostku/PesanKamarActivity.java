@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -29,10 +30,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class PesanKamarActivity extends AppCompatActivity {
 
@@ -43,16 +48,19 @@ public class PesanKamarActivity extends AppCompatActivity {
     LinearLayout pesanKamar;
     ScrollView scrollView;
     private String checkout_date, checkin_date, roomOption, roomId, today;
+    private String name, phone_number, room_floor, room_number;
     private DatabaseReference mDatabase, updateDatabase;
     boolean isValidNama, isValidNotelp, isValidBulan, isValidRadio = false;
     private long totalPrice, basePrice;
     private DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
     private UserSession userSession = UserSession.getInstance();
+    private ArrayList<Transaction> transactions = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fetchDataTransactionFromFirebase();
         setContentView(R.layout.activity_pesan_kamar);
         findLayout();
         getTodaysDate();
@@ -62,11 +70,17 @@ public class PesanKamarActivity extends AppCompatActivity {
         header.setText("Pesan Kamar");
         checkin_date = getIntent().getStringExtra("tanggal_masuk");
         tanggalMasuk.setText(dateStringDisplayFormat(checkin_date));
-        String choosenFloor = getIntent().getStringExtra("lantai");
-        lantai.setText(choosenFloor);
-        String choosenRoom = getIntent().getStringExtra("kamar");
-        kamar.setText(choosenRoom);
-        roomId = getIntent().getStringExtra("kamar_id");
+
+        if(UserSession.getInstance().getRole() == 1){
+            getDataUser();
+        }else {
+            room_floor = getIntent().getStringExtra("lantai");
+            lantai.setText(room_floor);
+            room_number = getIntent().getStringExtra("kamar");
+            kamar.setText(room_number);
+            roomId = getIntent().getStringExtra("kamar_id");
+        }
+
 
         editTextCheck();
 
@@ -102,7 +116,7 @@ public class PesanKamarActivity extends AppCompatActivity {
                     });
 
                     // add new transaction
-                    Transaction transaction = new Transaction(namaEdt.getText().toString(), notelpEdt.getText().toString(), choosenFloor, choosenRoom,
+                    Transaction transaction = new Transaction(namaEdt.getText().toString(), notelpEdt.getText().toString(), room_floor, room_number,
                             roomOption, String.valueOf(basePrice), String.valueOf(totalPrice), userSession.getIdKost(), checkin_date, checkout_date, today);
                     mDatabase = FirebaseDatabase.getInstance("https://kostku-89690-default-rtdb.firebaseio.com/").getReference().child("transaction");
                     newPostRef = mDatabase.push();
@@ -392,5 +406,91 @@ public class PesanKamarActivity extends AppCompatActivity {
     private String dateStringDisplayFormat(String date) {
         int month = Integer.parseInt(date.substring(3, 5));
         return date.substring(0, 2) + " " + getMonthFormatString(month) + " " + date.substring(6, 10);
+    }
+
+    private boolean fetchDataTransactionFromFirebase() {
+        mDatabase = FirebaseDatabase.getInstance("https://kostku-89690-default-rtdb.firebaseio.com/").getReference().child("transaction");
+
+        ValueEventListener postListener = new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot transactionSnapshot : snapshot.getChildren()){
+                    Transaction transaction = null;
+                    transaction = new Transaction(transactionSnapshot);
+                    transactions.add(transaction);
+                    Log.d("Tdatabase", "onDataChange: Transaction ID: " + transaction.getId());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getName());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getPhone_number());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getCheckin_date());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getCheckout_date());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getRoom_floor());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getRoom_number());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getRoom_option());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getBase_price());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getTotal_price());
+                    Log.d("Tdatabase", "onDataChange: " + transaction.getKost_id());
+                }
+                getDataUser();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("fdatabase", "onDataChange: " + error.getMessage());
+            }
+        };
+        mDatabase.addValueEventListener(postListener);
+        return true;
+    }
+
+    private void getDataUser() {
+        for (Transaction transaction : transactions) {
+            if (transaction.getPhone_number().equals(UserSession.getInstance().getUsername())) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                Date checkoutDate = null;
+                try {
+                    checkoutDate = sdf.parse(transaction.getCheckout_date());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if (new Date().before(checkoutDate)) {
+                    name = transaction.getName();
+                    phone_number = transaction.getPhone_number();
+                    room_floor = transaction.getRoom_floor();
+                    room_number = transaction.getRoom_number();
+//                    kost_id = transaction.getKost_id();
+                    Log.d("trans", "getDataUser: " + transaction.getName());
+                    namaEdt.setText(name);
+                    namaEdt.setFocusable(false);
+                    notelpEdt.setText(phone_number);
+                    notelpEdt.setFocusable(false);
+                    lantai.setText(room_floor);
+                    lantai.setEnabled(false);
+                    kamar.setText(room_number);
+                    kamar.setEnabled(false);
+
+                    roomOption = transaction.getRoom_option();
+                    if(Objects.equals(roomOption, "1")){
+                        radioGroup.check(R.id.option1);
+//                        radioGroup.setClickable(false);
+//                        radioGroup.isEnabled();
+                    } else if (Objects.equals(roomOption, "2")){
+                        radioGroup.check(R.id.option2);
+//                        radioGroup.setClickable(false);
+//                        radioGroup.setEnabled(false);
+                    } else if (Objects.equals(roomOption, "3")){
+                        radioGroup.check(R.id.option3);
+//                        radioGroup.setClickable(false);
+//                        radioGroup.setEnabled(false);
+                    }
+                    for (int i = 0; i < radioGroup.getChildCount(); i++) {
+                        View child = radioGroup.getChildAt(i);
+                        child.setEnabled(false);
+                    }
+
+                    break;
+                }
+            }
+        }
     }
 }

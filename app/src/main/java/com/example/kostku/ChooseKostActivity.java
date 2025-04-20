@@ -25,7 +25,7 @@ import java.util.List;
 
 public class ChooseKostActivity extends AppCompatActivity implements ChooseKostAdapter.ChooseKostAdapterListener {
 
-    int[] kostImage = {R.drawable.logonew, R.drawable.option1, R.drawable.logonew};
+    int[] kostImage = {R.drawable.kost_1, R.drawable.kost_2, R.drawable.kost_3};
     private UserSession userSession = UserSession.getInstance();
 
     private ArrayList<Kost> kosts = new ArrayList<>();
