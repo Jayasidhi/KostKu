@@ -280,15 +280,15 @@ public class PesanKamarActivity extends AppCompatActivity {
 
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.option1) {
-                Toast.makeText(this, "Option 1 Selected", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Option 1 Selected", Toast.LENGTH_SHORT).show();
                 isValidRadio = true;
                 roomOption = "1";
             } else if (checkedId == R.id.option2) {
-                Toast.makeText(this, "Option 2 Selected", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Option 2 Selected", Toast.LENGTH_SHORT).show();
                 isValidRadio = true;
                 roomOption = "2";
             } else if (checkedId == R.id.option3) {
-                Toast.makeText(this, "Option 3 Selected", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Option 3 Selected", Toast.LENGTH_SHORT).show();
                 isValidRadio = true;
                 roomOption = "3";
             } else {
