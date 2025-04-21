@@ -32,7 +32,6 @@ public class HistoryLaporanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history_laporan);
         fetchDataFromFirebase();
 
-
         RecyclerView recyclerView = findViewById(R.id.rvHistoryLaporanKost);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -65,8 +64,7 @@ public class HistoryLaporanActivity extends AppCompatActivity {
                     Laporan laporan = new Laporan(laporanSnapshot);
                     if (UserSession.getInstance().getRole() == 0 && UserSession.getInstance().getIdKost().equals(laporan.getKost_id())) {
                         laporans.add(laporan);
-                    }
-                    else if (UserSession.getInstance().getRole() == 1 && laporan.getUsername().equals(UserSession.getInstance().getUsername())) {
+                    } else if (UserSession.getInstance().getRole() == 1 && laporan.getUsername().equals(UserSession.getInstance().getUsername())) {
                         laporans.add(laporan);
                     }
                     Log.d("laporan", "onDataChange: user: " + laporan.getUsername());

@@ -115,7 +115,7 @@ public class KamarFragment extends Fragment {
                         choosenRoomId = room.getId();
                     }
                 }
-                Toast.makeText(getActivity(), "Selected item" + spinnerValue, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Selected item" + spinnerValue, Toast.LENGTH_SHORT).show();
                 Log.d("floor", "onViewCreated: room selected : " + spinnerKamar.getSelectedItem().toString());
             }
 
@@ -139,9 +139,9 @@ public class KamarFragment extends Fragment {
 
         pesanKamarButton = getView().findViewById(R.id.pesan_kamar_btn);
 
-        if(UserSession.getInstance().getRole() == 0){
+        if (UserSession.getInstance().getRole() == 0) {
             pesanKamarButton.setVisibility(View.GONE);
-        } else if (UserSession.getInstance().getRole() == 1){
+        } else if (UserSession.getInstance().getRole() == 1) {
             pesanKamarButton.setText("Perpanjang");
         }
         pesanKamarButton.setOnClickListener(new View.OnClickListener() {
@@ -204,7 +204,7 @@ public class KamarFragment extends Fragment {
                 month = month + 1;
                 String date = makeDateString(day, month, year);
                 dateButton.setText(dateStringDisplayFormat(date));
-                Toast.makeText(getActivity(), date, Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), date, Toast.LENGTH_LONG).show();
 
                 // dibawah ini untuk validasi output kamar apa aja yang avail
                 getTempRooms();

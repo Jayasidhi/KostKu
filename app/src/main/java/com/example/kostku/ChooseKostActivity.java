@@ -45,8 +45,6 @@ public class ChooseKostActivity extends AppCompatActivity implements ChooseKostA
         RecyclerView recyclerView = findViewById(R.id.rvKost);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
-
         chooseKostAdapter = new ChooseKostAdapter(kosts, kostImage, this);
 
         recyclerView.setAdapter(chooseKostAdapter);
@@ -56,7 +54,7 @@ public class ChooseKostActivity extends AppCompatActivity implements ChooseKostA
     @Override
     public void chooseKostAdapterListener(int position) {
         userSession.setIdKost(kosts.get(position).getId());
-        Toast.makeText(this, kosts.get(position).getId(), Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, kosts.get(position).getId(), Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, HomeActivity.class);
         this.startActivity(intent);
     }

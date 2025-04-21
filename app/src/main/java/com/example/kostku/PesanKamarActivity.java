@@ -71,9 +71,9 @@ public class PesanKamarActivity extends AppCompatActivity {
         checkin_date = getIntent().getStringExtra("tanggal_masuk");
         tanggalMasuk.setText(dateStringDisplayFormat(checkin_date));
 
-        if(UserSession.getInstance().getRole() == 1){
+        if (UserSession.getInstance().getRole() == 1) {
             getDataUser();
-        }else {
+        } else {
             room_floor = getIntent().getStringExtra("lantai");
             lantai.setText(room_floor);
             room_number = getIntent().getStringExtra("kamar");
@@ -315,6 +315,7 @@ public class PesanKamarActivity extends AppCompatActivity {
 
         today = makeDateString(day, month, year);
     }
+
     private static String makeDateString(int day, int month, int year) {
         String date = null;
         date = day < 10 ? "0" + day : day + "";
@@ -415,7 +416,7 @@ public class PesanKamarActivity extends AppCompatActivity {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot transactionSnapshot : snapshot.getChildren()){
+                for (DataSnapshot transactionSnapshot : snapshot.getChildren()) {
                     Transaction transaction = null;
                     transaction = new Transaction(transactionSnapshot);
                     transactions.add(transaction);
@@ -470,15 +471,15 @@ public class PesanKamarActivity extends AppCompatActivity {
                     kamar.setEnabled(false);
 
                     roomOption = transaction.getRoom_option();
-                    if(Objects.equals(roomOption, "1")){
+                    if (Objects.equals(roomOption, "1")) {
                         radioGroup.check(R.id.option1);
 //                        radioGroup.setClickable(false);
 //                        radioGroup.isEnabled();
-                    } else if (Objects.equals(roomOption, "2")){
+                    } else if (Objects.equals(roomOption, "2")) {
                         radioGroup.check(R.id.option2);
 //                        radioGroup.setClickable(false);
 //                        radioGroup.setEnabled(false);
-                    } else if (Objects.equals(roomOption, "3")){
+                    } else if (Objects.equals(roomOption, "3")) {
                         radioGroup.check(R.id.option3);
 //                        radioGroup.setClickable(false);
 //                        radioGroup.setEnabled(false);

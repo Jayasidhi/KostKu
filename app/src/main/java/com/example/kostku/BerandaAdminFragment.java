@@ -30,11 +30,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link BerandaAdminFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class BerandaAdminFragment extends Fragment {
 
     private DatabaseReference mDatabase;
@@ -53,35 +48,8 @@ public class BerandaAdminFragment extends Fragment {
     private int thisMonth, thisYear;
     private String currentKost;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public BerandaAdminFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment BerandaAdminFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static BerandaAdminFragment newInstance(String param1, String param2) {
-        BerandaAdminFragment fragment = new BerandaAdminFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -98,11 +66,6 @@ public class BerandaAdminFragment extends Fragment {
 
         fetchDataFromFirebase();
         fetchDataTransactionFromFirebase();
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
     }
 
@@ -135,20 +98,20 @@ public class BerandaAdminFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_beranda_admin, container, false);
     }
 
-    public void expiredKost(){
-        for(Transaction transaction : transactions){
-            int checkoutMonth = Integer.parseInt(transaction.getCheckout_date().substring(3,5));
-            if((transaction.getKost_id().equals(currentKost)) && checkoutMonth == thisMonth){
+    public void expiredKost() {
+        for (Transaction transaction : transactions) {
+            int checkoutMonth = Integer.parseInt(transaction.getCheckout_date().substring(3, 5));
+            if ((transaction.getKost_id().equals(currentKost)) && checkoutMonth == thisMonth) {
                 expiredKost.add(transaction);
                 Log.d("expired", "expiredKost: " + expiredKost);
             }
         }
     }
 
-    public void newCustomer(){
-        for(Transaction transaction : transactions){
-            int checkinMonth = Integer.parseInt(transaction.getCheckin_date().substring(3,5));
-            if((transaction.getKost_id().equals(currentKost)) && checkinMonth == thisMonth){
+    public void newCustomer() {
+        for (Transaction transaction : transactions) {
+            int checkinMonth = Integer.parseInt(transaction.getCheckin_date().substring(3, 5));
+            if ((transaction.getKost_id().equals(currentKost)) && checkinMonth == thisMonth) {
                 newCustomer.add(transaction);
                 Log.d("new", "newCustomer: " + newCustomer);
             }
@@ -156,7 +119,7 @@ public class BerandaAdminFragment extends Fragment {
     }
 
 
-    public void countPenghasilan(){
+    public void countPenghasilan() {
         penghasilanTotal = 0;
         penghasilanBulan = 0;
 //        String currentKost = UserSession.getInstance().getIdKost();
@@ -166,13 +129,13 @@ public class BerandaAdminFragment extends Fragment {
 //        int thisMonth = cal.get(Calendar.MONTH) + 1;
 //        int thisYear = cal.get(Calendar.YEAR);
 
-        for(Transaction transaction : transactions) {
-            int transactionMonth = Integer.parseInt(transaction.getTransaction_date().substring(3,5));
-            int checkinYear = Integer.parseInt(transaction.getCheckin_date().substring(6,10));
-            if(transaction.getKost_id().equals(currentKost)){
+        for (Transaction transaction : transactions) {
+            int transactionMonth = Integer.parseInt(transaction.getTransaction_date().substring(3, 5));
+            int checkinYear = Integer.parseInt(transaction.getCheckin_date().substring(6, 10));
+            if (transaction.getKost_id().equals(currentKost)) {
                 penghasilanTotal = penghasilanTotal + Long.parseLong(transaction.getTotal_price());
             }
-            if((transaction.getKost_id().equals(currentKost)) && (transactionMonth == thisMonth) && (checkinYear == thisYear)){
+            if ((transaction.getKost_id().equals(currentKost)) && (transactionMonth == thisMonth) && (checkinYear == thisYear)) {
                 penghasilanBulan = penghasilanBulan + Long.parseLong(transaction.getTotal_price());
                 Log.d("penghasilan", "countPenghasilan bulan: " + penghasilanBulan + " " + transactionMonth + thisMonth);
             }
@@ -231,7 +194,7 @@ public class BerandaAdminFragment extends Fragment {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot transactionSnapshot : snapshot.getChildren()){
+                for (DataSnapshot transactionSnapshot : snapshot.getChildren()) {
                     Transaction transaction = null;
                     transaction = new Transaction(transactionSnapshot);
                     transactions.add(transaction);

@@ -24,25 +24,10 @@ import com.google.firebase.database.annotations.NotNull;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link BerandaFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class BerandaFragment extends Fragment {
     private DatabaseReference mDatabase;
     private ArrayList<Room> rooms = new ArrayList<>();
     private ArrayList<Transaction> transactions = new ArrayList<>();
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     TextView jumlahKamar;
     private int persediaan = 0;
 
@@ -50,34 +35,11 @@ public class BerandaFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment BerandaFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static BerandaFragment newInstance(String param1, String param2) {
-        BerandaFragment fragment = new BerandaFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fetchDataFromFirebase();
         fetchDataTransactionFromFirebase();
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
     }
 
     @Override
@@ -142,7 +104,7 @@ public class BerandaFragment extends Fragment {
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot transactionSnapshot : snapshot.getChildren()){
+                for (DataSnapshot transactionSnapshot : snapshot.getChildren()) {
                     Transaction transaction = null;
                     transaction = new Transaction(transactionSnapshot);
                     transactions.add(transaction);

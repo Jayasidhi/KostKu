@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private boolean isErrorField = false;
+    //    private boolean isErrorField = false;
     private ArrayList<User> users = new ArrayList<>();
     private ArrayList<Transaction> transactions = new ArrayList<>();
     private UserSession userSession = UserSession.getInstance();
@@ -66,8 +66,6 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("fdatabase", "onDataChange: username session: " + userSession.getUsername());
                     Log.d("fdatabase", "onDataChange: " + userSession.getRole());
                 }
-
-
             }
         });
 

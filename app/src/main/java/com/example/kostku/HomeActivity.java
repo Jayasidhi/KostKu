@@ -34,7 +34,7 @@ public class HomeActivity extends AppCompatActivity {
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        if(userSession.getRole() == 0){
+        if (userSession.getRole() == 0) {
             replaceFragment(new BerandaAdminFragment());
         } else {
             replaceFragment(new BerandaFragment());
@@ -47,7 +47,7 @@ public class HomeActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.beranda:
                     Log.d("role", "onCreate: " + userSession.getRole());
-                    if(userSession.getRole() == 0){
+                    if (userSession.getRole() == 0) {
                         replaceFragment(new BerandaAdminFragment());
                     } else {
                         replaceFragment(new BerandaFragment());

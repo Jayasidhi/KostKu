@@ -20,15 +20,15 @@ import java.util.List;
 
 public class ChooseKostAdapter extends RecyclerView.Adapter<ChooseKostAdapter.ViewHolder> {
 
-    private static List <Kost> kostList;
+    private static List<Kost> kostList;
     private ChooseKostAdapterListener mChooseKostAdapterListener;
 
     int[] images;
 
     public ChooseKostAdapter(List<Kost> kostList, int[] images, ChooseKostAdapterListener chooseKostAdapterListener) {
-        if(kostList.size() > 0){
+        if (kostList.size() > 0) {
             Log.d("D", "ChooseKostAdapter: " + kostList.get(0).getAddress());
-        }else {
+        } else {
             Log.d("D", "ChooseKostAdapter: " + "data kosong");
         }
         this.kostList = kostList;
@@ -39,7 +39,7 @@ public class ChooseKostAdapter extends RecyclerView.Adapter<ChooseKostAdapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.kost_row,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.kost_row, parent, false);
         view.setClickable(true);
         view.setFocusableInTouchMode(true);
 
@@ -67,7 +67,7 @@ public class ChooseKostAdapter extends RecyclerView.Adapter<ChooseKostAdapter.Vi
         return kostList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ImageView kostRowImage;
         private final TextView kostRowName, kostRowAddress;
@@ -95,6 +95,6 @@ public class ChooseKostAdapter extends RecyclerView.Adapter<ChooseKostAdapter.Vi
     }
 
     public interface ChooseKostAdapterListener {
-            void chooseKostAdapterListener(int position);
+        void chooseKostAdapterListener(int position);
     }
 }

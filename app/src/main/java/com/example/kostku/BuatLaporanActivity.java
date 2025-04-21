@@ -51,7 +51,6 @@ public class BuatLaporanActivity extends AppCompatActivity {
 
         header.setText("Buat Laporan");
 
-
         Spinner spinnerKategori = findViewById(R.id.spinnerCategory);
         ArrayAdapter<CharSequence> adapterKategori = ArrayAdapter.createFromResource(this, R.array.spinnerKategoriLapor, android.R.layout.simple_spinner_dropdown_item);
         adapterKategori.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -70,7 +69,6 @@ public class BuatLaporanActivity extends AppCompatActivity {
             }
         });
 
-
         buatLaporanButton = findViewById(R.id.lapor_btn);
         buatLaporanButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view1) {
@@ -82,7 +80,6 @@ public class BuatLaporanActivity extends AppCompatActivity {
                     mDatabase = FirebaseDatabase.getInstance("https://kostku-89690-default-rtdb.firebaseio.com/").getReference().child("laporan");
                     DatabaseReference newPostRef = mDatabase.push();
                     newPostRef.setValue(laporan);
-
 
 //                Toast.makeText(BuatLaporanActivity.this, "Button Clicked!", Toast.LENGTH_SHORT).show();
                     AlertDialog.Builder builder = new AlertDialog.Builder(BuatLaporanActivity.this);

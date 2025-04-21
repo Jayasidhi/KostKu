@@ -16,7 +16,7 @@ public class ExpiredKostAdapter extends RecyclerView.Adapter<ExpiredKostAdapter.
 
     private List<Transaction> transactionList;
 
-    public ExpiredKostAdapter(List<Transaction> transactionList){
+    public ExpiredKostAdapter(List<Transaction> transactionList) {
         this.transactionList = transactionList;
     }
 

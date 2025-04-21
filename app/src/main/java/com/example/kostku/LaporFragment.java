@@ -38,55 +38,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link LaporFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class LaporFragment extends Fragment {
 
     private DatabaseReference mDatabase;
     private ArrayList<Laporan> laporans = new ArrayList<>();
     private LaporanAdapter laporanAdapter;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public LaporFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment LaporFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static LaporFragment newInstance(String param1, String param2) {
-        LaporFragment fragment = new LaporFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -102,12 +66,11 @@ public class LaporFragment extends Fragment {
         fetchDataFromFirebase();
 
         RelativeLayout buatLaporan = (RelativeLayout) getView().findViewById(R.id.buat_laporan_layout);
-        buatLaporan.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                if (UserSession.getInstance().getRole() == -1){
+        buatLaporan.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (UserSession.getInstance().getRole() == -1) {
                     return;
-                }
-                else {
+                } else {
                     Intent intent = new Intent(getActivity(), BuatLaporanActivity.class);
                     startActivity(intent);
                 }
@@ -116,8 +79,8 @@ public class LaporFragment extends Fragment {
         });
 
         RelativeLayout historyLaporan = (RelativeLayout) getView().findViewById(R.id.history_laporan_layout);
-        historyLaporan.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+        historyLaporan.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), HistoryLaporanActivity.class);
                 startActivity(intent);
             }
@@ -131,7 +94,6 @@ public class LaporFragment extends Fragment {
 //        laporanList.add(new Laporan("kamar", "AC Rusak", "Diterima", String.valueOf(new Date())));
 //        laporanList.add(new Laporan("kamar", "AC Tidak Dingin", "Diproses", String.valueOf(new Date())));
 //        laporanList.add(new Laporan("kamar", "Lemari Patah", "Diterima", String.valueOf(new Date())));
-
 
 
         laporanAdapter = new LaporanAdapter(laporans);
@@ -152,8 +114,7 @@ public class LaporFragment extends Fragment {
                     Laporan laporan = new Laporan(laporanSnapshot);
                     if (UserSession.getInstance().getRole() == 0 && UserSession.getInstance().getIdKost().equals(laporan.getKost_id()) && laporan.getStatus_laporan().equals("0")) {
                         laporans.add(laporan);
-                    }
-                    else if (UserSession.getInstance().getRole() == 1 && laporan.getUsername().equals(UserSession.getInstance().getUsername()) && laporan.getStatus_laporan().equals("0")) {
+                    } else if (UserSession.getInstance().getRole() == 1 && laporan.getUsername().equals(UserSession.getInstance().getUsername()) && laporan.getStatus_laporan().equals("0")) {
                         laporans.add(laporan);
                     }
                     Log.d("laporan", "onDataChange: user: " + laporan.getUsername());

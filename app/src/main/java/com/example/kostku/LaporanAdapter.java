@@ -62,7 +62,7 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
         holder.completeLaporan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "Button Clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(view.getContext(), "Button Clicked!", Toast.LENGTH_SHORT).show();
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setTitle("Apakah Laporan Telah Selesai Diproses ?");
 

@@ -16,7 +16,7 @@ public class ManagementKostAdapter extends RecyclerView.Adapter<ManagementKostAd
 
     private List<Transaction> transactionList;
 
-    public ManagementKostAdapter(List<Transaction> transactionList){
+    public ManagementKostAdapter(List<Transaction> transactionList) {
         this.transactionList = transactionList;
     }
 
