@@ -20,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.kostku.model.Room;
 import com.example.kostku.model.Transaction;
 import com.example.kostku.model.User;
 import com.example.kostku.model.UserSession;
@@ -28,6 +29,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.NotNull;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -55,6 +57,7 @@ public class PesanKamarActivity extends AppCompatActivity {
     private DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
     private UserSession userSession = UserSession.getInstance();
     private ArrayList<Transaction> transactions = new ArrayList<>();
+    private ArrayList<Room> rooms = new ArrayList<>();
 
 
     @Override
@@ -73,6 +76,7 @@ public class PesanKamarActivity extends AppCompatActivity {
 
         if (UserSession.getInstance().getRole() == 1) {
             getDataUser();
+            fetchDataRoomFromFirebase();
         } else {
             room_floor = getIntent().getStringExtra("lantai");
             lantai.setText(room_floor);
@@ -89,14 +93,19 @@ public class PesanKamarActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (isValidNama && isValidNotelp && isValidBulan && isValidRadio) {
-                    // generate new user
+                    DatabaseReference newPostRef;
+
                     String username = notelpEdt.getText().toString();
                     String name[] = namaEdt.getText().toString().split(" ");
                     String password = name[0] + username.substring(notelpEdt.length() - 3);
-                    User newUser = new User(username, password, namaEdt.getText().toString());
-                    mDatabase = FirebaseDatabase.getInstance("https://kostku-89690-default-rtdb.firebaseio.com/").getReference().child("user");
-                    DatabaseReference newPostRef = mDatabase.push();
-                    newPostRef.setValue(newUser);
+
+                    if (UserSession.getInstance().getRole() != 1) {
+                        // generate new user
+                        User newUser = new User(username, password, namaEdt.getText().toString());
+                        mDatabase = FirebaseDatabase.getInstance("https://kostku-89690-default-rtdb.firebaseio.com/").getReference().child("user");
+                        newPostRef = mDatabase.push();
+                        newPostRef.setValue(newUser);
+                    }
 
                     //update kost available
                     updateDatabase = FirebaseDatabase.getInstance("https://kostku-89690-default-rtdb.firebaseio.com/").getReference().child("room").child(roomId);
@@ -126,16 +135,24 @@ public class PesanKamarActivity extends AppCompatActivity {
                     AlertDialog.Builder builder = new AlertDialog.Builder(PesanKamarActivity.this);
 
                     builder.setTitle("Pesanan Anda Berhasil !");
-                    builder.setMessage("username : " + username + "\n" + "password : " + password);
+                    if (UserSession.getInstance().getRole() != 1) {
+                        builder.setMessage("username : " + username + "\n" + "password : " + password);
+                    }
 
                     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             Toast.makeText(getApplicationContext(), "Thank You !", Toast.LENGTH_SHORT).show();
+                            if (UserSession.getInstance().getRole() == 1) {
+                                Intent intent = new Intent(PesanKamarActivity.this, HomeActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Intent intent = new Intent(PesanKamarActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
 
-                            Intent intent = new Intent(PesanKamarActivity.this, LoginActivity.class);
-                            startActivity(intent);
-                            finish();
                         }
                     });
 
@@ -489,9 +506,41 @@ public class PesanKamarActivity extends AppCompatActivity {
                         child.setEnabled(false);
                     }
 
+                    header.setText("Perpanjang Kamar");
+
                     break;
                 }
             }
         }
+    }
+
+    private boolean fetchDataRoomFromFirebase() {
+        mDatabase = FirebaseDatabase.getInstance("https://kostku-89690-default-rtdb.firebaseio.com/").getReference().child("room");
+
+        ValueEventListener postListener = new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onDataChange(@NotNull DataSnapshot snapshot) {
+                for (DataSnapshot roomSnapshot : snapshot.getChildren()) {
+                    Room room = null;
+                    room = new Room(roomSnapshot);
+                    rooms.add(room);
+                    if (room.getKost_id().equals(UserSession.getInstance().getIdKost()) && room.getName().equals(room_number)) {
+                        roomId = room.getId();
+                    }
+                    Log.d("fdatabase", "onDataChange: " + room.getName());
+                    Log.d("fdatabase", "onDataChange: " + room.getFloor());
+                    Log.d("fdatabase", "onDataChange: " + room.getKost_id());
+                }
+            }
+
+
+            @Override
+            public void onCancelled(@NotNull DatabaseError error) {
+                Log.d("fdatabase", "onDataChange: " + error.getMessage());
+            }
+        };
+        mDatabase.addValueEventListener(postListener);
+        return true;
     }
 }

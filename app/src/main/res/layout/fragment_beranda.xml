@@ -64,10 +64,40 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/fasilitasLayout"
+            android:id="@+id/checkoutLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/persediaanLayout"
+            android:layout_marginTop="12dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/checkoutTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="Tanggal Keluar: "
+                android:textSize="18dp"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/checkoutInp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_toRightOf="@id/checkoutTxt"
+                android:text="Tanggal"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/fasilitasLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/checkoutLayout"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="12dp">
 

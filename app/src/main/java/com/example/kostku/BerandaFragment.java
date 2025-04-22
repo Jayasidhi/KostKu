@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,13 +23,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class BerandaFragment extends Fragment {
     private DatabaseReference mDatabase;
     private ArrayList<Room> rooms = new ArrayList<>();
     private ArrayList<Transaction> transactions = new ArrayList<>();
-    TextView jumlahKamar;
+    TextView jumlahKamar, checkout_date;
+    RelativeLayout checkoutLayout;
+    private String checkout;
     private int persediaan = 0;
 
     public BerandaFragment() {
@@ -54,6 +60,14 @@ public class BerandaFragment extends Fragment {
 
         jumlahKamar = view.findViewById(R.id.persediaanInp);
         jumlahKamar.setText(String.valueOf(persediaan));
+
+
+        checkoutLayout = view.findViewById(R.id.checkoutLayout);
+        if (UserSession.getInstance().getRole() == 1) {
+            checkoutLayout.setVisibility(View.VISIBLE);
+            checkout_date = view.findViewById(R.id.checkoutInp);
+            checkout_date.setText(checkout);
+        }
 
     }
 
@@ -108,6 +122,20 @@ public class BerandaFragment extends Fragment {
                     Transaction transaction = null;
                     transaction = new Transaction(transactionSnapshot);
                     transactions.add(transaction);
+
+                    if (transaction.getPhone_number().equals(UserSession.getInstance().getUsername())) {
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                        Date checkoutDate = null;
+                        try {
+                            checkoutDate = sdf.parse(transaction.getCheckout_date());
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        if (new Date().before(checkoutDate)) {
+                            checkout = transaction.getCheckout_date();
+                            checkout_date.setText(checkout);
+                        }
+                    }
                     Log.d("Tdatabase", "onDataChange: Transaction ID: " + transaction.getId());
                     Log.d("Tdatabase", "onDataChange: " + transaction.getName());
                     Log.d("Tdatabase", "onDataChange: " + transaction.getPhone_number());
