@@ -101,7 +101,8 @@ public class BerandaAdminFragment extends Fragment {
     public void expiredKost() {
         for (Transaction transaction : transactions) {
             int checkoutMonth = Integer.parseInt(transaction.getCheckout_date().substring(3, 5));
-            if ((transaction.getKost_id().equals(currentKost)) && checkoutMonth == thisMonth) {
+            int checkinYear = Integer.parseInt(transaction.getCheckin_date().substring(6, 10));
+            if ((transaction.getKost_id().equals(currentKost)) && (checkoutMonth == thisMonth) && (checkinYear == thisYear)) {
                 expiredKost.add(transaction);
                 Log.d("expired", "expiredKost: " + expiredKost);
             }
