@@ -26,7 +26,9 @@ public class Transaction {
         this.transaction_date = transactionSnapshot.child("transaction_date").getValue().toString();
     }
 
-    public Transaction(String name, String phone_number, String room_floor, String room_number, String room_option, String base_price, String total_price, String kost_id, String checkin_date, String checkout_date, String transaction_date) {
+    public Transaction(String name, String phone_number, String room_floor, String room_number,
+                       String room_option, String base_price, String total_price, String kost_id,
+                       String checkin_date, String checkout_date, String transaction_date) {
         this.name = name;
         this.phone_number = phone_number;
         this.room_floor = room_floor;
