@@ -4,13 +4,11 @@ import com.google.firebase.database.DataSnapshot;
 
 public class Kost {
     private String id, name, address;
-    private String photo;
 
     public Kost(DataSnapshot kostSnapshot) {
         this.id = kostSnapshot.getKey().toString();
         this.name = kostSnapshot.child("name").getValue().toString();
         this.address = kostSnapshot.child("address").getValue().toString();
-//        this.photo = photo;
     }
 
     public String getId() {
@@ -31,17 +29,5 @@ public class Kost {
 
     public String getAddress() {
         return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
     }
 }
