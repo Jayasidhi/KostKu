@@ -133,7 +133,6 @@ public class KamarFragment extends Fragment {
         webSettings.setDomStorageEnabled(true);
 
         webView.setWebViewClient(new WebViewClient());
-        // Load local HTML file with Panorama JS
         webView.loadUrl("File:///android_asset/panorama.html");
 
         pesanKamarButton = getView().findViewById(R.id.pesan_kamar_btn);
