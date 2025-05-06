@@ -4,10 +4,8 @@ import com.google.firebase.database.DataSnapshot;
 
 public class Transaction {
 
-    String id, name, phone_number, room_floor, room_number, room_option, base_price, total_price, kost_id;
-    String checkin_date;
-    String checkout_date;
-    String transaction_date;
+    private String id, name, phone_number, room_floor, room_number, room_option, base_price, total_price, kost_id;
+    private String checkin_date, checkout_date, transaction_date;
 
     public Transaction(DataSnapshot transactionSnapshot) {
         this.id = transactionSnapshot.getKey().toString();
@@ -37,7 +35,7 @@ public class Transaction {
         this.base_price = base_price;
         this.total_price = total_price;
         this.kost_id = kost_id;
-        this.checkin_date = checkin_date; //1-1-2020 --> 01-01-2020
+        this.checkin_date = checkin_date;
         this.checkout_date = checkout_date;
         this.transaction_date = transaction_date;
     }
