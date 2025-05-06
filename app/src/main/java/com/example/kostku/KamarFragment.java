@@ -65,6 +65,7 @@ public class KamarFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_kamar, container, false);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -103,7 +104,6 @@ public class KamarFragment extends Fragment {
         Spinner spinnerKamar = getView().findViewById(R.id.spinnerRoom);
         adapterKamar = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, roomFloor);
         adapterKamar.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Log.d("floor", "onViewCreated: room selected test: " + spinnerKamar);
         spinnerKamar.setAdapter(adapterKamar);
         spinnerKamar.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -115,7 +115,6 @@ public class KamarFragment extends Fragment {
                         choosenRoomId = room.getId();
                     }
                 }
-//                Toast.makeText(getActivity(), "Selected item" + spinnerValue, Toast.LENGTH_SHORT).show();
                 Log.d("floor", "onViewCreated: room selected : " + spinnerKamar.getSelectedItem().toString());
             }
 
